@@ -1,0 +1,310 @@
+/* profile.css
+   Styles tuned to match the screenshot: large rounded white panel,
+   purple vertical nav, soft shadows, chips, neat three-column layout.
+   Requires that the page root uses class="profile-root" (see notes).
+*/
+
+.profile-root {
+  --bg: #f3f6fa;            /* page background */
+  --panel: #ffffff;         /* white card background */
+  --muted: #6b7280;         /* muted text */
+  --accent: #3b35b3;        /* deep purple - primary */
+  --accent-2: #10b981;      /* green accent */
+  --soft-border: #e9f0ff;
+  --card-radius: 18px;
+  font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  padding: 32px;
+  box-sizing: border-box;
+  color: #0f172a;
+}
+
+/* outer rounded container that imitates the white rounded frame in screenshot */
+.profile-root > .outer-frame {
+  max-width: 1280px;
+  margin: 0 auto;
+  background: var(--panel);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(16,24,40,0.06);
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  min-height: 540px;
+}
+
+/* left purple nav strip */
+.profile-root .left-strip {
+  background: linear-gradient(180deg, var(--accent), #4b42d6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 18px 10px;
+  gap: 18px;
+  position: relative;
+}
+
+/* small icons vertically */
+.profile-root .left-strip .nav-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+/* active nav item background */
+.profile-root .left-strip .nav-icon.active {
+  background: rgba(255,255,255,0.12);
+}
+
+/* top header (spanning right area) */
+.profile-root .topbar {
+  grid-column: 2 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 28px;
+  border-bottom: 1px solid rgba(14,20,40,0.03);
+  background: linear-gradient(180deg, rgba(248,250,255,0.6), rgba(255,255,255,0.4));
+}
+
+/* title / logo in topbar */
+.profile-root .brand {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:700;
+  color: var(--accent);
+  font-size: 20px;
+}
+
+/* main area grid (content inside the white rounded frame) */
+.profile-root .content {
+  grid-column: 2 / -1;
+  display: grid;
+  grid-template-columns: 260px 1fr 320px;
+  gap: 28px;
+  padding: 28px;
+  align-items: start;
+  background: transparent;
+}
+
+/* card base (left/profile card, center info cards, right column cards) */
+.profile-root .card {
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 8px 18px rgba(16,24,40,0.04);
+  border: 1px solid var(--soft-border);
+  box-sizing: border-box;
+}
+
+/* LEFT: profile card */
+.profile-root .profile-card {
+  display:flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+}
+
+/* big avatar ring */
+.profile-root .avatar-wrap {
+  width: 132px;
+  height: 132px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(99,102,241,0.06), rgba(99,102,241,0.02));
+  padding: 8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow: 0 8px 24px rgba(16,24,40,0.04);
+}
+.profile-root .avatar-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 999px;
+  display:block;
+}
+
+/* profile name / title / rate */
+.profile-root h2.profile-name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #111827;
+}
+.profile-root p.profile-role {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.profile-root .rate {
+  margin-top: 8px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* summary/bio */
+.profile-root .profile-bio {
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* skills chips (left card) */
+.profile-root .skills {
+  display:flex;
+  flex-wrap: wrap;
+  gap:10px;
+  justify-content:center;
+  margin-top: 6px;
+}
+.profile-root .chip {
+  background: #f8fafc;
+  border: 1px solid rgba(14,20,40,0.03);
+  color: #334155;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* center area: basic information card */
+.profile-root .basic-card .basic-grid {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items:start;
+}
+.profile-root .basic-grid .field {
+  margin-bottom: 8px;
+}
+.profile-root .label { color: var(--muted); font-size: 13px; font-weight:600; }
+.profile-root .value { color: #0f172a; font-weight:700; font-size:14px; margin-top:6px; }
+
+/* buttons row */
+.profile-root .actions-row {
+  margin-top: 14px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+.profile-root .btn {
+  padding:10px 14px;
+  border-radius: 10px;
+  font-weight:700;
+  font-size:13px;
+  cursor:pointer;
+  border:none;
+}
+.profile-root .btn.primary {
+  background: linear-gradient(180deg, var(--accent), #5f57da);
+  color: white;
+  box-shadow: 0 10px 26px rgba(59,53,179,0.12);
+}
+.profile-root .btn.ghost {
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid rgba(59,53,179,0.08);
+}
+
+/* experience / tabs area */
+.profile-root .tabs {
+  margin-top: 18px;
+}
+.profile-root .tab-head {
+  display:flex;
+  gap:14px;
+  align-items:center;
+  border-bottom: 1px solid rgba(14,20,40,0.03);
+  padding-bottom: 10px;
+}
+.profile-root .tab-head button {
+  background:transparent;
+  border:none;
+  padding:8px 6px;
+  cursor:pointer;
+  font-weight:700;
+  color: var(--muted);
+  position:relative;
+}
+.profile-root .tab-head button.active {
+  color: var(--accent);
+}
+.profile-root .experience-list { margin-top: 14px; display:flex; flex-direction:column; gap:12px; }
+.profile-root .exp-item {
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #fbfdff;
+  border: 1px solid #eef6ff;
+}
+.profile-root .exp-left { max-width: 74%; }
+.profile-root .exp-company { font-weight:700; color:#0f172a; }
+.profile-root .exp-meta { color: var(--muted); font-size:13px; margin-top:4px; }
+.profile-root .exp-desc { color: #334155; font-size:13px; margin-top:8px; }
+
+/* right column: media + cv */
+.profile-root .media {
+  height: 180px;
+  border-radius: 8px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: #f8fafc;
+  border: 1px solid #eef6ff;
+  color: var(--muted);
+  font-weight:600;
+}
+
+/* career interests & CV card style */
+.profile-root textarea, .profile-root input, .profile-root select {
+  width:100%;
+  box-sizing:border-box;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid #eef2ff;
+  background: #fff;
+  font-size:13px;
+  color:#0f172a;
+}
+
+/* similar profiles (right) */
+.profile-root .similar-item {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:8px 4px;
+  border-bottom: 1px dashed rgba(14,20,40,0.03);
+}
+.profile-root .similar-item img { width:44px; height:44px; border-radius:999px; object-fit:cover; }
+
+/* small helpers */
+.profile-root .muted { color: var(--muted); }
+.profile-root .small { font-size: 13px; color: var(--muted); }
+
+/* responsive tweaks */
+@media (max-width: 1000px) {
+  .profile-root .content { grid-template-columns: 1fr; padding: 18px; }
+  .profile-root .outer-frame { grid-template-columns: 60px 1fr; }
+  .profile-root .left-strip { padding: 12px 8px; }
+  .profile-root .topbar { padding: 12px; }
+}
+
+/* tiny polish */
+.profile-root button:active { transform: translateY(1px); }
+.profile-root .card p, .profile-root .card div { word-break: break-word; }
