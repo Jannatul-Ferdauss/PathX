@@ -68,8 +68,14 @@ export default function Homepage() {
 
   return (
     <>
-      {/* Minimal Header */}
-      <header className="homepage-header" style={{ display: "flex", justifyContent: "flex-end", padding: "1rem" }}>
+      {/* Header with PathX Branding */}
+      <header className="homepage-header">
+        <div className="header-left">
+          <svg className="pathx-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18.5c-3.82-.93-6.5-4.65-6.5-8.5V8.3l6.5-3.11v15.31z"/>
+          </svg>
+          <span className="pathx-name">PathX</span>
+        </div>
         {user ? (
           <button className="btn logout-btn" onClick={handleLogout}>
             Logout

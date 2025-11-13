@@ -13,7 +13,7 @@ const PROFILE_TEMPLATE = {
   name: "",
   title: "",
   rate: "",
-  avatar: "https://via.placeholder.com/300.png?text=User",
+  avatar: "https://i.pravatar.cc/300?img=47",
   bio: "",
   skills: [],
   careerInterests: "",
@@ -448,21 +448,21 @@ export default function ProfilePage() {
   // (Loading/Error states are unchanged)
   if (authLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', fontSize: '1.2rem', background: '#f3f6fa' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', fontSize: '1.2rem', background: '#0a0e27', color: '#e4e6eb' }}>
         Checking authentication...
       </div>
     );
   }
   if (!currentUser) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', fontSize: '1.2rem', background: '#f3f6fa' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', fontSize: '1.2rem', background: '#0a0e27', color: '#e4e6eb' }}>
         Please log in to view your profile.
       </div>
     );
   }
   if (profileLoading || !profile) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', fontSize: '1.2rem', background: '#f3f6fa' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', fontSize: '1.2rem', background: '#0a0e27', color: '#e4e6eb' }}>
         Loading Profile...
       </div>
     );
@@ -470,14 +470,14 @@ export default function ProfilePage() {
 
   // --- Main Render (Your Original JSX) ---
   return (
-    <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", fontSize: "16px", margin: 0, padding: 0, minHeight: "100vh", boxSizing: "border-box" }}>
+    <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", fontSize: "16px", margin: 0, padding: 0, minHeight: "100vh", boxSizing: "border-box", background: "#0a0e27" }}>
       <div style={{ display: "flex", margin: 0, padding: 0 }}>
         {/* Sidebar (unchanged) */}
-        <aside style={{ position: "fixed", left: 0, top: 0, height: "100%", width: sidebarOpen ? 256 : 80, background: "#ffffff", borderRight: "2px solid #3b82f6", boxShadow: "4px 0 10px rgba(59, 130, 246, 0.06)", zIndex: 40, overflowY: "auto", boxSizing: "border-box" }}>
+        <aside style={{ position: "fixed", left: 0, top: 0, height: "100%", width: sidebarOpen ? 256 : 80, background: "linear-gradient(180deg, #1a1f3a 0%, #0f1420 100%)", borderRight: "1px solid rgba(99, 102, 241, 0.2)", boxShadow: "4px 0 20px rgba(0, 0, 0, 0.3)", zIndex: 40, overflowY: "auto", boxSizing: "border-box" }}>
           <div style={{ padding: 24 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
-              <svg style={{ width: 40, height: 40 }} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" > <path d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21" stroke="#2563eb" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> </svg>
-              {sidebarOpen && ( <div style={{ display: "flex", alignItems: "center", gap: 8 }}> <span style={{ fontWeight: "bold", color: "#1e40af", fontSize: "1.15rem" }}>PathX</span> </div> )}
+              <svg style={{ width: 40, height: 40, filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.6))" }} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" > <path d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> </svg>
+              {sidebarOpen && ( <div style={{ display: "flex", alignItems: "center", gap: 8 }}> <span style={{ fontWeight: "bold", background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontSize: "1.3rem" }}>PathX</span> </div> )}
             </div>
             <nav style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {[
@@ -486,7 +486,7 @@ export default function ProfilePage() {
                 { id: "resources", label: "Resources", icon: "📚", path: "/userdash" },
                 { id: "profile", label: "Profile", icon: "👤", path: "/profile" } 
               ].map(item => (
-                <button key={item.id} onClick={() => { setCurrentView(item.id); try { navigate(item.path); } catch{} }} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderRadius: 10, border: "none", background: currentView === item.id ? "#3b82f6" : "transparent", color: currentView === item.id ? "#ffffff" : "#64748b", cursor: "pointer", transition: "all 0.3s ease", fontWeight: currentView === item.id ? 600 : 500, boxShadow: currentView === item.id ? "0 4px 8px rgba(59, 130, 246, 0.18)" : "none", textAlign: "left" }}>
+                <button key={item.id} onClick={() => { setCurrentView(item.id); try { navigate(item.path); } catch{} }} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderRadius: 12, border: "none", background: currentView === item.id ? "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)" : "transparent", color: currentView === item.id ? "#a5b4fc" : "#e4e6eb", cursor: "pointer", transition: "all 0.2s ease", fontWeight: currentView === item.id ? 600 : 500, boxShadow: currentView === item.id ? "0 4px 15px rgba(99, 102, 241, 0.2)" : "none", textAlign: "left" }}>
                   <span style={{ fontSize: 20 }}>{item.icon}</span>
                   {sidebarOpen && <span>{item.label}</span>}
                 </button>
@@ -494,7 +494,7 @@ export default function ProfilePage() {
             </nav>
           </div>
           <div style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)" }}>
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ padding: 8, borderRadius: 8, border: "2px solid #3b82f6", background: "#ffffff", color: "#3b82f6", cursor: "pointer", transition: "all 0.3s ease", fontWeight: 600, boxShadow: "0 2px 5px rgba(59, 130, 246, 0.12)" }}>
+            <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ padding: 8, borderRadius: 8, border: "1px solid #0a0e27", background: "#1a1f3a", color: "#6366f1", cursor: "pointer", transition: "all 0.3s ease", fontWeight: 600, boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)" }}>
               {sidebarOpen ? "◀" : "▶"}
             </button>
           </div>
@@ -504,31 +504,31 @@ export default function ProfilePage() {
         <main style={{ marginLeft: sidebarOpen ? 256 : 80, flex: 1, minHeight: "100vh", width: `calc(100vw - ${sidebarOpen ? 256 : 80}px)`, overflow: "hidden", boxSizing: "border-box" }}>
           {/* Embedded <style> (unchanged) */}
           <style>{`
-            :root{ --bg:#f3f6fa; --panel:#fff; --muted:#6b7280; --accent:#3b35b3; --soft-border:#e9f0ff; --card-radius:12px; }
+            :root{ --bg:#0a0e27; --panel:#1a1f3a; --muted:#a5b4fc; --accent:#6366f1; --soft-border:rgba(99, 102, 241, 0.2); --card-radius:12px; }
             .content { display:grid; grid-template-columns:300px 1fr; gap:24px; padding:20px; background:var(--bg); min-height:100vh; box-sizing:border-box; }
-            .card { background:var(--panel); border-radius:12px; padding:18px; box-shadow:0 8px 20px rgba(16,24,40,0.04); border:2px solid #000; box-sizing:border-box; }
-            .profile-card { display:flex; flex-direction:column; gap:12px; align-items:center; text-align:center; box-sizing:border-box; border:2px solid #000; }
-            .avatar-wrap { width:132px; height:132px; border-radius:999px; padding:8px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(16,24,40,0.04); background:linear-gradient(180deg, rgba(99,102,241,0.06), rgba(99,102,241,0.02)); }
+            .card { background:var(--panel); border-radius:12px; padding:18px; box-shadow:0 8px 20px rgba(0,0,0,0.3); border:1px solid rgba(99, 102, 241, 0.3); box-sizing:border-box; }
+            .profile-card { display:flex; flex-direction:column; gap:12px; align-items:center; text-align:center; box-sizing:border-box; border:1px solid rgba(99, 102, 241, 0.3); }
+            .avatar-wrap { width:132px; height:132px; border-radius:999px; padding:8px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(99, 102, 241, 0.3); background:linear-gradient(180deg, rgba(99,102,241,0.2), rgba(99,102,241,0.05)); }
             .avatar-wrap img{ width:100%; height:100%; object-fit:cover; border-radius:999px; display:block; }
-            h2.profile-name{ margin:0; font-size:18px; font-weight:800; color:#111827; }
+            h2.profile-name{ margin:0; font-size:18px; font-weight:800; color:#e4e6eb; }
             p.profile-role{ margin:6px 0 0; font-size:13px; color:var(--muted); }
             .rate{ margin-top:8px; color:var(--accent); font-weight:700; }
-            .profile-bio{ color:#334155; font-size:13px; line-height:1.5; text-align:left; }
+            .profile-bio{ color:#d1d5db; font-size:13px; line-height:1.5; text-align:left; }
             .skills { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:6px; }
-            .chip{ background:#f8fafc; border:1px solid rgba(14,20,40,0.03); color:#334155; padding:6px 10px; border-radius:999px; font-size:12px; display:inline-flex; align-items:center; gap:8px; }
+            .chip{ background:rgba(99, 102, 241, 0.1); border:1px solid rgba(99, 102, 241, 0.3); color:#e4e6eb; padding:6px 10px; border-radius:999px; font-size:12px; display:inline-flex; align-items:center; gap:8px; }
             .basic-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:start; }
             .label{ color:var(--muted); font-size:13px; font-weight:600; }
-            .value{ color:#0f172a; font-weight:700; font-size:14px; margin-top:6px; }
+            .value{ color:#e4e6eb; font-weight:700; font-size:14px; margin-top:6px; }
             .actions-row{ margin-top:14px; display:flex; gap:12px; align-items:center; }
             .btn{ padding:10px 14px; border-radius:10px; font-weight:700; font-size:13px; cursor:pointer; border:none; }
-            .btn.primary{ background: linear-gradient(180deg, var(--accent), #5f57da); color:white; box-shadow:0 10px 26px rgba(59,53,179,0.12); }
-            .btn.ghost{ background:transparent; color:var(--accent); border:1px solid rgba(59,53,179,0.08); }
-            .tab-head{ display:flex; gap:14px; align-items:center; border-bottom:1px solid rgba(14,20,40,0.03); padding-bottom:10px; margin-top:12px; }
+            .btn.primary{ background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color:white; box-shadow:0 10px 26px rgba(99, 102, 241, 0.4); }
+            .btn.ghost{ background:transparent; color:var(--accent); border:1px solid rgba(99, 102, 241, 0.3); }
+            .tab-head{ display:flex; gap:14px; align-items:center; border-bottom:1px solid rgba(99, 102, 241, 0.2); padding-bottom:10px; margin-top:12px; }
             .tab-head button{ background:transparent; border:none; padding:8px 6px; cursor:pointer; font-weight:700; color:var(--muted); position:relative; }
             .tab-head button.active{ color:var(--accent); }
-            .tab-head button.active::after{ content:''; position:absolute; bottom:-10px; left:0; right:0; height:3px; background:#3b82f6; border-radius:2px; }
-            .exp-item{ display:flex; justify-content:space-between; gap:12px; padding:14px; border-radius:8px; background:#fbfdff; border:1px solid #eef6ff; }
-            input, textarea, select { width:100%; box-sizing:border-box; padding:10px 12px; border-radius:8px; border:1px solid #eef2ff; background:#fff; font-size:13px; color:#0f172a; }
+            .tab-head button.active::after{ content:''; position:absolute; bottom:-10px; left:0; right:0; height:3px; background:#6366f1; border-radius:2px; }
+            .exp-item{ display:flex; justify-content:space-between; gap:12px; padding:14px; border-radius:8px; background:rgba(26, 31, 58, 0.6); border:1px solid rgba(99, 102, 241, 0.2); }
+            input, textarea, select { width:100%; box-sizing:border-box; padding:10px 12px; border-radius:8px; border:1px solid rgba(99, 102, 241, 0.3); background:rgba(26, 31, 58, 0.6); font-size:13px; color:#e4e6eb; }
             .mb-2 { margin-bottom: 8px; } /* Helper class */
             @media (max-width:1100px) { .content { grid-template-columns:1fr; } .content > aside:nth-child(1) { order: 1 } .content > main { order: 2 } }
           `}</style>
@@ -537,7 +537,12 @@ export default function ProfilePage() {
             {/* LEFT (unchanged) */}
             <aside className="card profile-card" style={{ boxSizing: "border-box" }} aria-labelledby="profile-title">
               <div className="avatar-wrap" style={{ boxSizing: "border-box" }}>
-                <img src={profile.avatar} alt={profile.name} />
+                <img 
+                  src={profile.avatar || "https://i.pravatar.cc/300?img=47"} 
+                  alt={profile.name || "User"} 
+                  onError={(e) => { e.target.src = "https://i.pravatar.cc/300?img=47"; }}
+                  style={{ border: "2px solid rgba(99, 102, 241, 0.3)" }}
+                />
               </div>
               {editing ? (
                 <>
@@ -553,7 +558,7 @@ export default function ProfilePage() {
               <div className="rate">{editing ? <input value={profile.rate} onChange={(e) => upd("rate", e.target.value)} /> : <div className="rate">{profile.rate || "—"}</div>}</div>
               
               <div style={{ width: "100%" }}>
-                <h4 style={{ margin: 0, fontSize: 13, color: "#374151" }}>Summary</h4>
+                <h4 style={{ margin: 0, fontSize: 13, color: "#a5b4fc" }}>Summary</h4>
                 {editing ? (
                   <textarea className="mt-2" rows={4} value={profile.bio} onChange={(e) => upd("bio", e.target.value)} />
                 ) : (
@@ -562,7 +567,7 @@ export default function ProfilePage() {
               </div>
 
               <div style={{ width: "100%" }}>
-                <h4 style={{ margin: 0, fontSize: 13, color: "#374151" }}>Skills</h4>
+                <h4 style={{ margin: 0, fontSize: 13, color: "#a5b4fc" }}>Skills</h4>
                 <div className="skills">
                   {profile.skills.map((s) => (
                     <div key={s} className="chip">
@@ -582,10 +587,10 @@ export default function ProfilePage() {
               </div>
 
               <div style={{ width: "100%", display: "flex", gap: 8, marginTop: 10 }}>
-                <button onClick={() => setEditing((v) => !v)} className={`btn ${editing ? "" : "primary"}`}>
+                <button onClick={() => setEditing((v) => !v)} className={`btn ${editing ? "ghost" : "primary"}`}>
                   {editing ? "Exit Edit" : "Edit Profile"}
                 </button>
-                <button onClick={handleSaveProfile} className="btn" style={{ border: "1px solid #e6eef9", background: "transparent" }}>Save</button>
+                <button onClick={handleSaveProfile} className="btn ghost">Save</button>
               </div>
             </aside>
 
@@ -595,12 +600,12 @@ export default function ProfilePage() {
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", gap: 12 }}>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-                    <h4 style={{ margin: 0, fontWeight: 700 }}>Basic Information</h4>
+                    <h4 style={{ margin: 0, fontWeight: 700, color: "#e4e6eb" }}>Basic Information</h4>
                     {!editingBasic ? (
-                      <button onClick={() => setEditingBasic(true)} className="btn" style={{ padding: "6px 12px", background: "#3b82f6", color: "#fff", border: "none", borderRadius: 6, fontSize: 12 }}>Edit</button>
+                      <button onClick={() => setEditingBasic(true)} className="btn primary" style={{ padding: "6px 12px", fontSize: 12 }}>Edit</button>
                     ) : (
                       <div style={{ display: "flex", gap: 8 }}>
-                        <button onClick={() => setEditingBasic(false)} className="btn" style={{ padding: "6px 12px", fontSize: 12 }}>Cancel</button>
+                        <button onClick={() => setEditingBasic(false)} className="btn ghost" style={{ padding: "6px 12px", fontSize: 12 }}>Cancel</button>
                         <button onClick={saveBasicInfo} className="btn primary" style={{ padding: "6px 12px", fontSize: 12 }}>Save</button>
                       </div>
                     )}
@@ -646,18 +651,18 @@ export default function ProfilePage() {
                   </div>
                   
                   {/* Desired Skills Section - Always Editable */}
-                  <div style={{ marginTop: 16, padding: 12, background: "#f8fafc", borderRadius: 8, border: "1px solid #e2e8f0" }}>
-                    <div className="label" style={{ fontWeight: 700, marginBottom: 8 }}>Desired Skills (For Learning Resources)</div>
+                  <div style={{ marginTop: 16, padding: 12, background: "rgba(26, 31, 58, 0.6)", borderRadius: 8, border: "1px solid rgba(99, 102, 241, 0.3)" }}>
+                    <div className="label" style={{ fontWeight: 700, marginBottom: 8, color: "#e4e6eb" }}>Desired Skills (For Learning Resources)</div>
                     <div className="skills" style={{ marginBottom: 8 }}>
                       {Array.isArray(profile.basic?.DesiredSkill) && profile.basic.DesiredSkill.length > 0 ? (
                         profile.basic.DesiredSkill.map((skill) => (
-                          <div key={skill} className="chip" style={{ background: "#dbeafe", border: "1px solid #3b82f6", color: "#1e40af" }}>
+                          <div key={skill} className="chip" style={{ background: "rgba(99, 102, 241, 0.15)", border: "1px solid rgba(99, 102, 241, 0.4)", color: "#e4e6eb" }}>
                             <span>{skill}</span>
                             <button onClick={() => removeDesiredSkill(skill)} aria-label={`Remove ${skill}`} style={{ border: "none", background: "transparent", color: "#ef4444", cursor: "pointer", fontSize: 16, fontWeight: "bold" }}>×</button>
                           </div>
                         ))
                       ) : (
-                        <p style={{ fontSize: 12, color: "#64748b", margin: 0 }}>No desired skills added yet. Add skills to get personalized learning recommendations!</p>
+                        <p style={{ fontSize: 12, color: "#a5b4fc", margin: 0 }}>No desired skills added yet. Add skills to get personalized learning recommendations!</p>
                       )}
                     </div>
                     <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
@@ -676,11 +681,11 @@ export default function ProfilePage() {
                       />
                       <button onClick={() => addDesiredSkill(newDesiredSkill)} className="btn primary" style={{ padding: "8px 16px", fontSize: 13 }}>Add</button>
                     </div>
-                    <p style={{ fontSize: 11, color: "#64748b", margin: "8px 0 0 0", fontStyle: "italic" }}>💡 These skills will be used to recommend courses in your dashboard</p>
+                    <p style={{ fontSize: 11, color: "#a5b4fc", margin: "8px 0 0 0", fontStyle: "italic" }}>💡 These skills will be used to recommend courses in your dashboard</p>
                   </div>
                 </div>
                 <div style={{ minWidth: 120, display: "flex", flexDirection: "column", gap: 8, alignItems: "flex-end" }}>
-                  <button onClick={() => { navigator.clipboard?.writeText(JSON.stringify(profile)).then(()=>alert("Profile JSON copied")); }} className="btn" style={{ border: "1px solid #eef2ff", background: "transparent" }}>Export (JSON)</button>
+                  <button onClick={() => { navigator.clipboard?.writeText(JSON.stringify(profile)).then(()=>alert("Profile JSON copied")); }} className="btn ghost">Export (JSON)</button>
                 </div>
               </div>
 
@@ -716,21 +721,21 @@ export default function ProfilePage() {
               
               {/* Career Interests (unchanged) */}
               <div style={{ marginTop: 12 }}>
-                <h4 style={{ margin: 0, fontWeight: 700 }}>Career Interests</h4>
+                <h4 style={{ margin: 0, fontWeight: 700, color: "#e4e6eb" }}>Career Interests</h4>
                 <textarea rows={3} value={profile.careerInterests || ""} onChange={(e) => updateCareerInterests(e.target.value)} style={{ marginTop: 8 }} />
               </div>
 
               {/* CV File Upload (unchanged) */}
               <div style={{ marginTop: 12 }}>
-                <h4 style={{ margin: 0, fontWeight: 700 }}>CV / Resume</h4>
+                <h4 style={{ margin: 0, fontWeight: 700, color: "#e4e6eb" }}>CV / Resume</h4>
                 {profile.cvLink ? (
                   <div style={{ marginTop: 8 }}>
-                    <a href={profile.cvLink} target="_blank" rel="noreferrer" style={{ color: "#3b82f6", fontWeight: 600 }}>
+                    <a href={profile.cvLink} target="_blank" rel="noreferrer" style={{ color: "#6366f1", fontWeight: 600 }}>
                       View Current CV
                     </a>
                   </div>
                 ) : (
-                  <p style={{ color: "#64748b", marginTop: 8, fontSize: 14 }}>No CV uploaded.</p>
+                  <p style={{ color: "#a5b4fc", marginTop: 8, fontSize: 14 }}>No CV uploaded.</p>
                 )}
                 <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8 }}>
                   <input 
@@ -747,7 +752,7 @@ export default function ProfilePage() {
                     {cvUploading ? "Uploading..." : "Upload"}
                   </button>
                 </div>
-                <p style={{ fontSize: 12, color: "#6b7280", margin: "8px 0 0 0" }}>
+                <p style={{ fontSize: 12, color: "#a5b4fc", margin: "8px 0 0 0" }}>
                   Note: Uploading CV saves it immediately.
                 </p>
               </div>
@@ -786,24 +791,24 @@ function Tabs({
         {active === "experience" && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <h5 style={{ margin: 0, fontWeight: 700 }}>Work Experience</h5>
+              <h5 style={{ margin: 0, fontWeight: 700, color: "#e4e6eb" }}>Work Experience</h5>
               <div>
                 <button onClick={onStartAdd} className="btn primary">+ Add</button>
               </div>
             </div>
             {experiences.length === 0 ? (
-              <div style={{ color: "#64748b", marginTop: 6, fontSize: 14 }}>No experience added yet.</div>
+              <div style={{ color: "#a5b4fc", marginTop: 6, fontSize: 14 }}>No experience added yet.</div>
             ) : (
               <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {experiences.map((e) => (
                   <li key={e.id} className="exp-item" style={{ marginBottom: 10 }}>
                   <div style={{ maxWidth: "74%" }}>
-                      <div style={{ fontWeight: 700 }}>{e.company || "No Company"} — {e.role || "No Role"}</div>
-                      <div style={{ color: "#64748b", fontSize: 13, marginTop: 4 }}>{e.date || "No Date"} • {e.location || "No Location"}</div>
-                      <div style={{ color: "#334155", fontSize: 13, marginTop: 8 }}>{e.description}</div>
+                      <div style={{ fontWeight: 700, color: "#e4e6eb" }}>{e.company || "No Company"} — {e.role || "No Role"}</div>
+                      <div style={{ color: "#a5b4fc", fontSize: 13, marginTop: 4 }}>{e.date || "No Date"} • {e.location || "No Location"}</div>
+                      <div style={{ color: "#d1d5db", fontSize: 13, marginTop: 8 }}>{e.description}</div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                      <button className="btn" style={{ background: "transparent", border: "none", color: "#4f46e5", padding: 0 }} onClick={() => onEdit(e)}>Edit</button>
+                      <button className="btn" style={{ background: "transparent", border: "none", color: "#6366f1", padding: 0 }} onClick={() => onEdit(e)}>Edit</button>
                       <button className="btn" style={{ background: "transparent", border: "none", color: "#ef4444", padding: 0 }} onClick={() => onDelete(e.id)}>Remove</button>
                   </div>
                   </li>
@@ -811,8 +816,8 @@ function Tabs({
               </ul>
             )}
             {tempExp && (
-              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "#fbfdff", border: "1px solid #eef6ff" }}>
-                <h6 style={{ margin: "0 0 8px 0" }}>{editingExpId ? "Edit Entry" : "New Entry"}</h6>
+              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "rgba(26, 31, 58, 0.6)", border: "1px solid rgba(99, 102, 241, 0.2)" }}>
+                <h6 style={{ margin: "0 0 8px 0", color: "#e4e6eb" }}>{editingExpId ? "Edit Entry" : "New Entry"}</h6>
                 <input id="exp-company" className="mb-2" placeholder="Company" value={tempExp.company} onChange={(ev)=>setTempExp({...tempExp, company: ev.target.value})} />
                 <input className="mb-2" placeholder="Role" value={tempExp.role} onChange={(ev)=>setTempExp({...tempExp, role: ev.target.value})} />
                 <input className="mb-2" placeholder="Dates (e.g., Jul 2018 - Dec 2020)" value={tempExp.date} onChange={(ev)=>setTempExp({...tempExp, date: ev.target.value})} />
@@ -820,7 +825,7 @@ function Tabs({
                 <textarea className="mb-2" rows={3} placeholder="Short description" value={tempExp.description} onChange={(ev)=>setTempExp({...tempExp, description: ev.target.value})} />
                 <div style={{ display: "flex", gap: 8 }}>
                   <button className="btn primary" onClick={saveExperience}>Save</button>
-                  <button className="btn" onClick={() => setTempExp(null)}>Cancel</button>
+                  <button className="btn ghost" onClick={() => setTempExp(null)}>Cancel</button>
                 </div>
               </div>
             )}
@@ -831,25 +836,25 @@ function Tabs({
         {active === "projects" && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <h5 style={{ margin: "0 0 12px 0", fontWeight: 700 }}>Projects</h5>
+              <h5 style={{ margin: "0 0 12px 0", fontWeight: 700, color: "#e4e6eb" }}>Projects</h5>
               <div>
                 <button onClick={onStartAddProject} className="btn primary">+ Add</button>
               </div>
             </div>
             {projects.length === 0 ? (
-              <div style={{ color: "#64748b", marginTop: 6, fontSize: 14 }}>No projects added yet.</div>
+              <div style={{ color: "#a5b4fc", marginTop: 6, fontSize: 14 }}>No projects added yet.</div>
             ) : (
               <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {projects.map((p) => (
                   <li key={p.id} className="exp-item" style={{ marginBottom: 10 }}>
                   <div style={{ maxWidth: "74%" }}>
-                      <div style={{ fontWeight: 700 }}>{p.name}</div>
-                      <div style={{ color: "#64748b", fontSize: 13, marginTop: 4 }}>{p.tech} • {p.date}</div>
-                      <div style={{ color: "#334155", fontSize: 13, marginTop: 8 }}>{p.description}</div>
-                      {p.link && <a href={p.link} target="_blank" rel="noreferrer" style={{ color: "#3b82f6", fontSize: 13, marginTop: 4, display: "inline-block" }}>{p.link}</a>}
+                      <div style={{ fontWeight: 700, color: "#e4e6eb" }}>{p.name}</div>
+                      <div style={{ color: "#a5b4fc", fontSize: 13, marginTop: 4 }}>{p.tech} • {p.date}</div>
+                      <div style={{ color: "#d1d5db", fontSize: 13, marginTop: 8 }}>{p.description}</div>
+                      {p.link && <a href={p.link} target="_blank" rel="noreferrer" style={{ color: "#6366f1", fontSize: 13, marginTop: 4, display: "inline-block" }}>{p.link}</a>}
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                      <button className="btn" style={{ background: "transparent", border: "none", color: "#4f46e5", padding: 0 }} onClick={() => onEditProject(p)}>Edit</button>
+                      <button className="btn" style={{ background: "transparent", border: "none", color: "#6366f1", padding: 0 }} onClick={() => onEditProject(p)}>Edit</button>
                       <button className="btn" style={{ background: "transparent", border: "none", color: "#ef4444", padding: 0 }} onClick={() => onDeleteProject(p.id)}>Remove</button>
                   </div>
                   </li>
@@ -857,8 +862,8 @@ function Tabs({
               </ul>
             )}
             {tempProject && (
-              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "#fbfdff", border: "1px solid #eef6ff" }}>
-                <h6 style={{ margin: "0 0 8px 0" }}>{editingProjectId ? "Edit Project" : "New Project"}</h6>
+              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "rgba(26, 31, 58, 0.6)", border: "1px solid rgba(99, 102, 241, 0.2)" }}>
+                <h6 style={{ margin: "0 0 8px 0", color: "#e4e6eb" }}>{editingProjectId ? "Edit Project" : "New Project"}</h6>
                 <input className="mb-2" placeholder="Project Name" value={tempProject.name} onChange={(ev)=>setTempProject({...tempProject, name: ev.target.value})} />
                 <input className="mb-2" placeholder="Technologies (e.g., React, Node.js)" value={tempProject.tech} onChange={(ev)=>setTempProject({...tempProject, tech: ev.target.value})} />
                 <input className="mb-2" placeholder="Dates (e.g., Jan 2024 - Mar 2024)" value={tempProject.date} onChange={(ev)=>setTempProject({...tempProject, date: ev.target.value})} />
@@ -866,7 +871,7 @@ function Tabs({
                 <textarea className="mb-2" rows={3} placeholder="Short description" value={tempProject.description} onChange={(ev)=>setTempProject({...tempProject, description: ev.target.value})} />
                 <div style={{ display: "flex", gap: 8 }}>
                   <button className="btn primary" onClick={saveProject}>Save</button>
-                  <button className="btn" onClick={() => setTempProject(null)}>Cancel</button>
+                  <button className="btn ghost" onClick={() => setTempProject(null)}>Cancel</button>
                 </div>
               </div>
             )}
@@ -877,25 +882,25 @@ function Tabs({
         {active === "education" && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-              <h5 style={{ margin: "0 0 12px 0", fontWeight: 700 }}>Education</h5>
+              <h5 style={{ margin: "0 0 12px 0", fontWeight: 700, color: "#e4e6eb" }}>Education</h5>
               <div>
                 <button onClick={onStartAddEducation} className="btn primary">+ Add</button>
               </div>
             </div>
             {education.length === 0 ? (
-                <div style={{ color: "#64748b", marginTop: 6, fontSize: 14 }}>No education info added yet.</div>
+                <div style={{ color: "#a5b4fc", marginTop: 6, fontSize: 14 }}>No education info added yet.</div>
             ) : (
               <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {education.map((e) => (
                   <li key={e.id} className="exp-item" style={{ marginBottom: 10 }}>
                   <div style={{ maxWidth: "74%" }}>
-                      <div style={{ fontWeight: 700 }}>{e.school}</div>
-                      <div style={{ color: "#64748b", fontSize: 13, marginTop: 4 }}>{e.degree}</div>
-                      <div style={{ color: "#64748b", fontSize: 13, marginTop: 2 }}>{e.date} • {e.location}</div>
-                      <div style={{ color: "#334155", fontSize: 13, marginTop: 8 }}>{e.description}</div>
+                      <div style={{ fontWeight: 700, color: "#e4e6eb" }}>{e.school}</div>
+                      <div style={{ color: "#a5b4fc", fontSize: 13, marginTop: 4 }}>{e.degree}</div>
+                      <div style={{ color: "#a5b4fc", fontSize: 13, marginTop: 2 }}>{e.date} • {e.location}</div>
+                      <div style={{ color: "#d1d5db", fontSize: 13, marginTop: 8 }}>{e.description}</div>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                      <button className="btn" style={{ background: "transparent", border: "none", color: "#4f46e5", padding: 0 }} onClick={() => onEditEducation(e)}>Edit</button>
+                      <button className="btn" style={{ background: "transparent", border: "none", color: "#6366f1", padding: 0 }} onClick={() => onEditEducation(e)}>Edit</button>
                       <button className="btn" style={{ background: "transparent", border: "none", color: "#ef4444", padding: 0 }} onClick={() => onDeleteEducation(e.id)}>Remove</button>
                   </div>
                   </li>
@@ -903,8 +908,8 @@ function Tabs({
               </ul>
             )}
             {tempEducation && (
-              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "#fbfdff", border: "1px solid #eef6ff" }}>
-                <h6 style={{ margin: "0 0 8px 0" }}>{editingEducationId ? "Edit Entry" : "New Entry"}</h6>
+              <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: "rgba(26, 31, 58, 0.6)", border: "1px solid rgba(99, 102, 241, 0.2)" }}>
+                <h6 style={{ margin: "0 0 8px 0", color: "#e4e6eb" }}>{editingEducationId ? "Edit Entry" : "New Entry"}</h6>
                 <input className="mb-2" placeholder="School / University" value={tempEducation.school} onChange={(ev)=>setTempEducation({...tempEducation, school: ev.target.value})} />
                 <input className="mb-2" placeholder="Degree (e.g., B.Sc in CSE)" value={tempEducation.degree} onChange={(ev)=>setTempEducation({...tempEducation, degree: ev.target.value})} />
                 <input className="mb-2" placeholder="Dates (e.g., 2020 - 2024)" value={tempEducation.date} onChange={(ev)=>setTempEducation({...tempEducation, date: ev.target.value})} />
@@ -912,7 +917,7 @@ function Tabs({
                 <textarea className="mb-2" rows={3} placeholder="Short description (e.g., CGPA, Thesis)" value={tempEducation.description} onChange={(ev)=>setTempEducation({...tempEducation, description: ev.target.value})} />
                 <div style={{ display: "flex", gap: 8 }}>
                   <button className="btn primary" onClick={saveEducation}>Save</button>
-                  <button className="btn" onClick={() => setTempEducation(null)}>Cancel</button>
+                  <button className="btn ghost" onClick={() => setTempEducation(null)}>Cancel</button>
                 </div>
               </div>
             )}

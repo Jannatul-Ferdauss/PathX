@@ -42,10 +42,10 @@ export default function Jobs() {
         display: "flex",
         fontFamily: "system-ui, -apple-system, sans-serif",
         minHeight: "100vh",
-        background: "#f3f4f6",
+        background: "#0a0e27",
       }}
     >
-      {/* Sidebar */}
+      {/* Sidebar - Dark Theme */}
       <aside
         style={{
           position: "fixed",
@@ -53,10 +53,11 @@ export default function Jobs() {
           top: 0,
           height: "100%",
           width: sidebarOpen ? 256 : 80,
-          background: "#ffffff",
-          borderRight: "1px solid #e5e7eb",
+          background: "linear-gradient(180deg, #1a1f3a 0%, #0f1420 100%)",
+          borderRight: "1px solid rgba(99, 102, 241, 0.2)",
           zIndex: 40,
           overflowY: "auto",
+          boxShadow: "4px 0 20px rgba(0, 0, 0, 0.3)",
         }}
       >
         <div style={{ padding: 24 }}>
@@ -69,14 +70,14 @@ export default function Jobs() {
             }}
           >
             <svg
-              style={{ width: 40, height: 40 }}
+              style={{ width: 40, height: 40, filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.6))" }}
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21"
-                stroke="#2563eb"
+                stroke="#6366f1"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -87,8 +88,11 @@ export default function Jobs() {
                 <span
                   style={{
                     fontWeight: "bold",
-                    color: "#1f2937",
-                    fontSize: "1.15rem",
+                    fontSize: "1.3rem",
+                    background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
                   }}
                 >
                   PathX
@@ -112,18 +116,19 @@ export default function Jobs() {
                   alignItems: "center",
                   gap: 12,
                   padding: "12px 16px",
-                  borderRadius: 8,
+                  borderRadius: 12,
                   border: "none",
                   background:
                     window.location.pathname === item.route
-                      ? "rgba(59,130,246,0.1)"
+                      ? "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)"
                       : "transparent",
                   color:
                     window.location.pathname === item.route
-                      ? "#3b82f6"
-                      : "#6b7280",
+                      ? "#a5b4fc"
+                      : "#e4e6eb",
                   cursor: "pointer",
-                  transition: "all 0.2s",
+                  transition: "all 0.2s ease",
+                  boxShadow: window.location.pathname === item.route ? "0 4px 15px rgba(99, 102, 241, 0.2)" : "none",
                 }}
               >
                 <span style={{ fontSize: 20 }}>{item.icon}</span>
@@ -146,9 +151,11 @@ export default function Jobs() {
             style={{
               padding: 8,
               borderRadius: 8,
-              border: "1px solid #e5e7eb",
-              background: "#ffffff",
+              border: "1px solid rgba(99, 102, 241, 0.3)",
+              background: "rgba(99, 102, 241, 0.1)",
+              color: "#a5b4fc",
               cursor: "pointer",
+              transition: "all 0.2s ease",
             }}
           >
             {sidebarOpen ? "◀" : "▶"}

@@ -107,22 +107,36 @@ export default function UserDash() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
 
-  // Config
+  // Config - Dark Theme
   const defaultConfig = {
     app_title: "PathX",
     welcome_message: "Welcome back",
     jobs_section_title: "Featured Jobs",
     resources_section_title: "Learning Resources (For Your Goals)",
     primary_color: "#6366f1",
-    secondary_color: "#f3f4f6",
-    text_color: "#1f2937",
-    card_background: "#ffffff",
-    accent_color: "#10b981",
+    secondary_color: "#0a0e27",
+    text_color: "#e4e6eb",
+    card_background: "#1a1f3a",
+    accent_color: "#8b5cf6",
     font_family: "Inter, system-ui, -apple-system, sans-serif",
     font_size: 16,
   };
   const [config] = useState(defaultConfig);
   const baseFontSize = config.font_size || defaultConfig.font_size;
+
+  // Helper function to create radial gradients for charts
+  const createRadialGradient = (ctx, chartArea, color1, color2) => {
+    const centerX = (chartArea.left + chartArea.right) / 2;
+    const centerY = (chartArea.top + chartArea.bottom) / 2;
+    const r = Math.min(
+      (chartArea.right - chartArea.left) / 2,
+      (chartArea.bottom - chartArea.top) / 2
+    );
+    const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, r);
+    gradient.addColorStop(0, color1);
+    gradient.addColorStop(1, color2);
+    return gradient;
+  };
 
   // Chart sample data (keeps UI alive; data not persisted)
   const lineData = {
@@ -131,10 +145,23 @@ export default function UserDash() {
       {
         label: "Applications",
         data: [3, 5, 4, 8, 6, 7],
-        borderColor: config.primary_color,
-        backgroundColor: `${config.primary_color}20`,
+        borderColor: "#6366f1",
+        backgroundColor: (context) => {
+          const ctx = context.chart.ctx;
+          const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+          gradient.addColorStop(0, "rgba(99, 102, 241, 0.4)");
+          gradient.addColorStop(0.5, "rgba(139, 92, 246, 0.2)");
+          gradient.addColorStop(1, "rgba(168, 85, 247, 0.05)");
+          return gradient;
+        },
         tension: 0.4,
         fill: true,
+        borderWidth: 3,
+        pointBackgroundColor: "#6366f1",
+        pointBorderColor: "#fff",
+        pointBorderWidth: 2,
+        pointRadius: 5,
+        pointHoverRadius: 7,
       },
     ],
   };
@@ -142,27 +169,59 @@ export default function UserDash() {
     responsive: true,
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
-    scales: { y: { beginAtZero: true } },
+    scales: { 
+      y: { 
+        beginAtZero: true,
+        ticks: { color: "#a5b4fc" },
+        grid: { color: "rgba(99, 102, 241, 0.1)" }
+      },
+      x: {
+        ticks: { color: "#a5b4fc" },
+        grid: { display: false }
+      }
+    },
   };
   const doughnutData = {
     labels: ["JavaScript", "React", "Python", "Communication", "Problem Solving"],
     datasets: [
       {
         data: [90, 85, 70, 80, 88],
-        backgroundColor: [
-          config.primary_color,
-          config.accent_color,
-          "#f59e0b",
-          "#ec4899",
-          "#8b5cf6",
-        ],
+        backgroundColor: (context) => {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          if (!chartArea) return null;
+          
+          const gradients = [
+            createRadialGradient(ctx, chartArea, '#60a5fa', '#3b82f6'),  // Blue gradient
+            createRadialGradient(ctx, chartArea, '#34d399', '#10b981'),  // Green gradient
+            createRadialGradient(ctx, chartArea, '#f472b6', '#ec4899'),  // Pink gradient
+            createRadialGradient(ctx, chartArea, '#fbbf24', '#f59e0b'),  // Amber gradient
+            createRadialGradient(ctx, chartArea, '#a78bfa', '#7c3aed'),  // Purple gradient
+          ];
+          return gradients[context.dataIndex];
+        },
+        borderWidth: 2,
+        borderColor: '#0a0e27',
+        hoverOffset: 12,
+        hoverBorderWidth: 3,
+        hoverBorderColor: '#fff',
+        spacing: 3,
       },
     ],
   };
   const doughnutOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { position: "bottom" } },
+    plugins: { 
+      legend: { 
+        position: "bottom",
+        labels: {
+          color: "#e4e6eb",
+          font: { size: 12 },
+          padding: 15,
+        }
+      } 
+    },
   };
   const barData = {
     labels: ["React Basics", "Advanced JS", "System Design", "Algorithms"],
@@ -170,15 +229,46 @@ export default function UserDash() {
       {
         label: "Progress %",
         data: [75, 45, 30, 60],
-        backgroundColor: config.accent_color,
+        backgroundColor: (context) => {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          if (!chartArea) return null;
+          
+          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+          const colors = [
+            ['#6366f1', '#8b5cf6'],
+            ['#8b5cf6', '#a855f7'],
+            ['#a855f7', '#c026d3'],
+            ['#ec4899', '#f97316'],
+          ];
+          const [start, end] = colors[context.dataIndex] || colors[0];
+          gradient.addColorStop(0, start);
+          gradient.addColorStop(1, end);
+          return gradient;
+        },
+        borderRadius: 8,
+        borderWidth: 0,
       },
     ],
   };
   const barOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { y: { beginAtZero: true, max: 100 } },
+    plugins: { 
+      legend: { display: false } 
+    },
+    scales: { 
+      y: { 
+        beginAtZero: true, 
+        max: 100,
+        ticks: { color: "#a5b4fc" },
+        grid: { color: "rgba(99, 102, 241, 0.1)" }
+      },
+      x: {
+        ticks: { color: "#a5b4fc" },
+        grid: { display: false }
+      }
+    },
   };
 
   /* ------------------- Auth: listen for signed-in user ------------------- */
@@ -442,10 +532,11 @@ export default function UserDash() {
             top: 0,
             height: "100%",
             width: sidebarOpen ? 256 : 80,
-            background: config.card_background,
-            borderRight: `1px solid ${config.secondary_color}`,
+            background: "linear-gradient(180deg, #1a1f3a 0%, #0f1420 100%)",
+            borderRight: `1px solid rgba(99, 102, 241, 0.2)`,
             zIndex: 40,
             overflowY: "auto",
+            boxShadow: "4px 0 20px rgba(0, 0, 0, 0.3)",
           }}
         >
           <div style={{ padding: 24 }}>
@@ -458,14 +549,14 @@ export default function UserDash() {
               }}
             >
               <svg
-                style={{ width: 40, height: 40 }}
+                style={{ width: 40, height: 40, filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.6))" }}
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
                   d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21"
-                  stroke="#2563eb"
+                  stroke="#6366f1"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -473,7 +564,14 @@ export default function UserDash() {
               </svg>
               {sidebarOpen && (
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontWeight: "bold", color: config.text_color }}>
+                  <span style={{ 
+                    fontWeight: "bold", 
+                    fontSize: "1.3rem",
+                    background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}>
                     {config.app_title}
                   </span>
                 </div>
@@ -505,12 +603,16 @@ export default function UserDash() {
                     alignItems: "center",
                     gap: 12,
                     padding: "12px 16px",
-                    borderRadius: 8,
+                    borderRadius: 12,
                     border: "none",
                     background:
-                      currentView === item.id ? `${config.primary_color}15` : "transparent",
-                    color: currentView === item.id ? config.primary_color : config.text_color,
+                      currentView === item.id 
+                        ? "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)" 
+                        : "transparent",
+                    color: currentView === item.id ? "#a5b4fc" : config.text_color,
                     cursor: "pointer",
+                    transition: "all 0.2s ease",
+                    boxShadow: currentView === item.id ? "0 4px 15px rgba(99, 102, 241, 0.2)" : "none",
                   }}
                 >
                   <span style={{ fontSize: baseFontSize * 1.25 }}>{item.icon}</span>
@@ -741,25 +843,42 @@ function DashboardView({
 
   return (
     <div>
+      {/* Welcome Banner - Dark Gradient */}
       <div
         style={{
-          backgroundImage: `url(${banner})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          borderRadius: 16,
-          padding: "40px 24px",
+          background: "linear-gradient(135deg, #1a1f3a 0%, #2d1b4e 50%, #1e1b3a 100%)",
+          borderRadius: 20,
+          padding: "50px 32px",
           color: "#fff",
           marginBottom: 32,
           position: "relative",
           overflow: "hidden",
+          boxShadow: "0 10px 40px rgba(99, 102, 241, 0.4)",
+          border: "1px solid rgba(99, 102, 241, 0.3)",
         }}
       >
-        <div style={{ position: "absolute", inset: 0 }}></div>
+        <div 
+          style={{ 
+            position: "absolute", 
+            inset: 0, 
+            background: "radial-gradient(circle at top right, rgba(139, 92, 246, 0.2), transparent 60%)",
+          }}
+        ></div>
         <div style={{ position: "relative", zIndex: 1 }}>
-          <h2 style={{ color: "black", fontSize: baseFontSize * 2, fontWeight: 700, marginBottom: 8 }}>
+          <h2 style={{ 
+            color: "#fff", 
+            fontSize: baseFontSize * 2.2, 
+            fontWeight: 700, 
+            marginBottom: 12,
+            textShadow: "0 2px 10px rgba(0,0,0,0.3)"
+          }}>
             {config.welcome_message}, {user.name.split(" ")[0]} 👋
           </h2>
-          <p style={{ color: "black", fontSize: baseFontSize * 1.1 }}>
+          <p style={{ 
+            color: "rgba(255,255,255,0.85)", 
+            fontSize: baseFontSize * 1.15,
+            textShadow: "0 1px 3px rgba(0,0,0,0.2)"
+          }}>
             Here's what's happening with your career journey today.
           </p>
         </div>
@@ -774,38 +893,55 @@ function DashboardView({
         }}
       >
         {[
-          { label: "Total Jobs Applied", value: user.totalJobsApplied || 12, icon: "💼", color: config.primary_color, border: "1px solid black" },
-          { label: "Suggested Courses", value: courses.length, icon: "📚", color: config.accent_color, border: "1px solid black" },
-          { label: "Skills Count", value: (user.skills || []).length, icon: "⭐", color: "#f59e0b", border: "1px solid black" },
-          { label: "Profile Strength", value: `${user.profileStrength || 75}%`, icon: "📊", color: "#8b5cf6", border: "1px solid black" },
+          { label: "Total Jobs Applied", value: user.totalJobsApplied || 12, icon: "💼", color: "#6366f1" },
+          { label: "Suggested Courses", value: courses.length, icon: "📚", color: "#8b5cf6" },
+          { label: "Skills Count", value: (user.skills || []).length, icon: "⭐", color: "#f59e0b" },
+          { label: "Profile Strength", value: `${user.profileStrength || 75}%`, icon: "📊", color: "#a855f7" },
         ].map((stat, idx) => (
-          <div key={idx} style={{ background: config.card_background, padding: 24, borderRadius: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.1)", border: stat.border }}>
+          <div 
+            key={idx} 
+            style={{ 
+              background: config.card_background, 
+              padding: 24, 
+              borderRadius: 16, 
+              boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
+              border: `1px solid rgba(99, 102, 241, 0.2)`,
+              borderTop: `4px solid ${stat.color}`,
+              transition: "transform 0.2s ease",
+            }}
+          >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 12 }}>
               <span style={{ fontSize: baseFontSize * 2 }}>{stat.icon}</span>
-              <div style={{ width: 8, height: 8, borderRadius: 9999, background: stat.color }} />
+              <div style={{ 
+                width: 10, 
+                height: 10, 
+                borderRadius: 9999, 
+                background: stat.color,
+                boxShadow: `0 0 10px ${stat.color}80`
+              }} />
             </div>
             <p style={{ fontSize: baseFontSize * 2, fontWeight: 700, color: config.text_color, margin: 0 }}>{stat.value}</p>
-            <p style={{ color: "#6b7280", marginTop: 6 }}>{stat.label}</p>
+            <p style={{ color: "#a5b4fc", marginTop: 6, fontSize: baseFontSize * 0.95 }}>{stat.label}</p>
           </div>
         ))}
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, marginBottom: 32 }}>
-        <div style={{ border: "1px solid black", background: config.card_background, padding: 24, borderRadius: 12 }}>
+        <div style={{ border: "1px solid black", borderTop: "4px solid #6366f1", background: config.card_background, padding: 24, borderRadius: 12 }}>
           <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>Job Applications Over Time</h3>
           <div style={{ height: 250 }}>
             <Line data={lineData} options={lineOptions} />
           </div>
         </div>
 
-        <div style={{ border: "1px solid black", background: config.card_background, padding: 24, borderRadius: 12 }}>
+        <div style={{ border: "1px solid black", borderTop: "4px solid #8b5cf6", background: config.card_background, padding: 24, borderRadius: 12 }}>
           <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>Skill Proficiency Breakdown</h3>
           <div style={{ height: 250 }}>
             <Doughnut data={doughnutData} options={doughnutOptions} />
           </div>
         </div>
 
-        <div style={{ border: "1px solid black", background: config.card_background, padding: 24, borderRadius: 12 }}>
+        <div style={{ border: "1px solid black", borderTop: "4px solid #ec4899", background: config.card_background, padding: 24, borderRadius: 12 }}>
           <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>Learning Progress</h3>
           <div style={{ height: 250 }}>
             <Bar data={barData} options={barOptions} />
