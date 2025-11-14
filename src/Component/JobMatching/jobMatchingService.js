@@ -173,7 +173,7 @@ export const getAIJobRecommendations = async (userProfile, jobs) => {
  */
 const getGeminiInsights = async (userProfile, topJobs) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `You are a career advisor AI. Analyze the following user profile and job matches to provide brief, actionable insights.
 

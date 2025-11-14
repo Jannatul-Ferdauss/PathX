@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Sidebar from '../Sidebar/Sidebar';
 
 // --- Firebase Imports ---
 import { db, auth, storage } from "../../firebase"; 
@@ -10,6 +11,9 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 // --- Skill Extraction Component ---
 import SkillExtractionDisplay from "../SkillExtraction/SkillExtractionDisplay";
+
+// --- CV Assistant Component ---
+import CVAssistant from "../CVAssistant/CVAssistant";
 
 const PROFILE_TEMPLATE = {
   id: "",
@@ -55,9 +59,8 @@ export default function ProfilePage() {
   const [tempEducation, setTempEducation] = useState(null);
   const [cvFile, setCvFile] = useState(null);
   const [cvUploading, setCvUploading] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [currentView, setCurrentView] = useState("profile");
   const [showSkillExtraction, setShowSkillExtraction] = useState(false);
+  const [showCVAssistant, setShowCVAssistant] = useState(false);
 
   // (Auth Listener is unchanged)
   useEffect(() => {
@@ -476,36 +479,11 @@ export default function ProfilePage() {
   return (
     <div style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", fontSize: "16px", margin: 0, padding: 0, minHeight: "100vh", boxSizing: "border-box", background: "#0a0e27" }}>
       <div style={{ display: "flex", margin: 0, padding: 0 }}>
-        {/* Sidebar (unchanged) */}
-        <aside style={{ position: "fixed", left: 0, top: 0, height: "100%", width: sidebarOpen ? 256 : 80, background: "linear-gradient(180deg, #1a1f3a 0%, #0f1420 100%)", borderRight: "1px solid rgba(99, 102, 241, 0.2)", boxShadow: "4px 0 20px rgba(0, 0, 0, 0.3)", zIndex: 40, overflowY: "auto", boxSizing: "border-box" }}>
-          <div style={{ padding: 24 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
-              <svg style={{ width: 40, height: 40, filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.6))" }} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" > <path d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21" stroke="#6366f1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> </svg>
-              {sidebarOpen && ( <div style={{ display: "flex", alignItems: "center", gap: 8 }}> <span style={{ fontWeight: "bold", background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", fontSize: "1.3rem" }}>PathX</span> </div> )}
-            </div>
-            <nav style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {[
-                { id: "dashboard", label: "Dashboard", icon: "📊", path: "/userdash" },
-                { id: "jobs", label: "Jobs", icon: "💼", path: "/userdash" },
-                { id: "resources", label: "Resources", icon: "📚", path: "/userdash" },
-                { id: "profile", label: "Profile", icon: "👤", path: "/profile" } 
-              ].map(item => (
-                <button key={item.id} onClick={() => { setCurrentView(item.id); try { navigate(item.path); } catch{} }} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderRadius: 12, border: "none", background: currentView === item.id ? "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)" : "transparent", color: currentView === item.id ? "#a5b4fc" : "#e4e6eb", cursor: "pointer", transition: "all 0.2s ease", fontWeight: currentView === item.id ? 600 : 500, boxShadow: currentView === item.id ? "0 4px 15px rgba(99, 102, 241, 0.2)" : "none", textAlign: "left" }}>
-                  <span style={{ fontSize: 20 }}>{item.icon}</span>
-                  {sidebarOpen && <span>{item.label}</span>}
-                </button>
-              ))}
-            </nav>
-          </div>
-          <div style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)" }}>
-            <button onClick={() => setSidebarOpen(!sidebarOpen)} style={{ padding: 8, borderRadius: 8, border: "1px solid #0a0e27", background: "#1a1f3a", color: "#6366f1", cursor: "pointer", transition: "all 0.3s ease", fontWeight: 600, boxShadow: "0 2px 5px rgba(0, 0, 0, 0.3)" }}>
-              {sidebarOpen ? "◀" : "▶"}
-            </button>
-          </div>
-        </aside>
+        {/* Sidebar */}
+        <Sidebar />
 
         {/* Main Content */}
-        <main style={{ marginLeft: sidebarOpen ? 256 : 80, flex: 1, minHeight: "100vh", width: `calc(100vw - ${sidebarOpen ? 256 : 80}px)`, overflow: "hidden", boxSizing: "border-box" }}>
+        <main style={{ flex: 1, minHeight: "100vh", overflow: "hidden", boxSizing: "border-box" }}>
           {/* Embedded <style> (unchanged) */}
           <style>{`
             :root{ --bg:#0a0e27; --panel:#1a1f3a; --muted:#a5b4fc; --accent:#6366f1; --soft-border:rgba(99, 102, 241, 0.2); --card-radius:12px; }
@@ -610,11 +588,22 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              <div style={{ width: "100%", display: "flex", gap: 8, marginTop: 10 }}>
+              <div style={{ width: "100%", display: "flex", gap: 8, marginTop: 10, flexDirection: "column" }}>
                 <button onClick={() => setEditing((v) => !v)} className={`btn ${editing ? "ghost" : "primary"}`}>
                   {editing ? "Exit Edit" : "Edit Profile"}
                 </button>
                 <button onClick={handleSaveProfile} className="btn ghost">Save</button>
+                <button 
+                  onClick={() => setShowCVAssistant(true)} 
+                  className="btn primary"
+                  style={{ 
+                    marginTop: 4,
+                    background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+                    boxShadow: "0 10px 26px rgba(16, 185, 129, 0.4)"
+                  }}
+                >
+                  📄 CV Assistant
+                </button>
               </div>
             </aside>
 
@@ -749,37 +738,6 @@ export default function ProfilePage() {
                 <textarea rows={3} value={profile.careerInterests || ""} onChange={(e) => updateCareerInterests(e.target.value)} style={{ marginTop: 8 }} />
               </div>
 
-              {/* CV File Upload (unchanged) */}
-              <div style={{ marginTop: 12 }}>
-                <h4 style={{ margin: 0, fontWeight: 700, color: "#e4e6eb" }}>CV / Resume</h4>
-                {profile.cvLink ? (
-                  <div style={{ marginTop: 8 }}>
-                    <a href={profile.cvLink} target="_blank" rel="noreferrer" style={{ color: "#6366f1", fontWeight: 600 }}>
-                      View Current CV
-                    </a>
-                  </div>
-                ) : (
-                  <p style={{ color: "#a5b4fc", marginTop: 8, fontSize: 14 }}>No CV uploaded.</p>
-                )}
-                <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 8 }}>
-                  <input 
-                    type="file" 
-                    accept=".pdf,.doc,.docx"
-                    onChange={(e) => setCvFile(e.target.files[0])} 
-                    style={{ fontSize: 13 }}
-                  />
-                  <button 
-                    className="btn primary" 
-                    onClick={handleCvUpload}
-                    disabled={!cvFile || cvUploading}
-                  >
-                    {cvUploading ? "Uploading..." : "Upload"}
-                  </button>
-                </div>
-                <p style={{ fontSize: 12, color: "#a5b4fc", margin: "8px 0 0 0" }}>
-                  Note: Uploading CV saves it immediately.
-                </p>
-              </div>
             </main>
           </div>
 
@@ -836,6 +794,14 @@ export default function ProfilePage() {
             />
           </div>
         </div>
+      )}
+
+      {/* CV Assistant Modal */}
+      {showCVAssistant && (
+        <CVAssistant 
+          currentProfile={profile}
+          onClose={() => setShowCVAssistant(false)}
+        />
       )}
     </div>
   );

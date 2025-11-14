@@ -1,32 +1,71 @@
-// skillExtractor.js - Smart Skill Extraction using Gemini AI
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { GEMINI_CONFIG } from '../config/geminiConfig';
+// skillExtractor.js - Smart Skill Extraction using AI
+import { generateAIResponse } from '../services/apiProviderService';
+import * as pdfjsLib from 'pdfjs-dist';
 
-// Initialize Gemini AI client
-const genAI = new GoogleGenerativeAI(GEMINI_CONFIG.apiKey);
+// Configure PDF.js worker - use webpack to handle the worker file
+pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.mjs',
+  import.meta.url
+).toString();
 
 /**
- * Extract text from CV file (TXT files only)
+ * Extract text from PDF file
+ * @param {File} file - The PDF file
+ * @returns {Promise<string>} - Extracted text content
+ */
+const extractTextFromPDF = async (file) => {
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    let fullText = '';
+
+    // Extract text from all pages
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map(item => item.str).join(' ');
+      fullText += pageText + '\n';
+    }
+
+    return fullText.trim();
+  } catch (error) {
+    throw new Error(`Failed to extract text from PDF: ${error.message}`);
+  }
+};
+
+/**
+ * Extract text from CV file (TXT and PDF files)
  * @param {File} file - The CV file
  * @returns {Promise<string>} - Extracted text content
  */
 export const extractTextFromFile = async (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        // For .txt files only
-        if (file.name.endsWith('.txt')) {
-          resolve(e.target.result);
+  return new Promise(async (resolve, reject) => {
+    try {
+      // For PDF files
+      if (file.name.toLowerCase().endsWith('.pdf')) {
+        const text = await extractTextFromPDF(file);
+        if (!text || text.trim().length === 0) {
+          reject(new Error('PDF appears to be empty or contains no extractable text'));
         } else {
-          reject(new Error('Only .txt files are supported. Please upload a text file or paste content directly.'));
+          resolve(text);
         }
-      } catch (err) {
-        reject(err);
       }
-    };
-    reader.onerror = () => reject(new Error('Failed to read file'));
-    reader.readAsText(file);
+      // For TXT files
+      else if (file.name.toLowerCase().endsWith('.txt')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          resolve(e.target.result);
+        };
+        reader.onerror = () => reject(new Error('Failed to read text file'));
+        reader.readAsText(file);
+      }
+      // Unsupported file type
+      else {
+        reject(new Error('Only PDF and TXT files are supported. Please upload a valid file.'));
+      }
+    } catch (err) {
+      reject(err);
+    }
   });
 };
 
@@ -36,17 +75,11 @@ export const extractTextFromFile = async (file) => {
  * @returns {Promise<Object>} - Extracted skills, roles, and domains
  */
 export const extractSkillsWithGemini = async (cvText) => {
-  if (!GEMINI_CONFIG.apiKey) {
-    throw new Error('Gemini API key not configured. Please add REACT_APP_GEMINI_API_KEY to .env file');
-  }
-
   if (!cvText || cvText.trim().length === 0) {
     throw new Error('CV text is empty. Please provide valid CV content.');
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: GEMINI_CONFIG.model });
-
     // Crafted prompt for skill extraction
     const prompt = `You are an expert CV/Resume analyzer. Extract skills and relevant information from the following CV text.
 
@@ -76,11 +109,18 @@ IMPORTANT:
 - Maximum 5-8 items per category
 - Be specific and accurate`;
 
-    const result = await model.generateContent(prompt);
-    const responseText = result.response.text();
+    // Use unified API provider with auto-fallback
+    const result = await generateAIResponse(prompt);
+    const responseText = result.response;
+
+    // Clean markdown if present
+    let cleanedText = responseText.trim();
+    if (cleanedText.startsWith('```')) {
+      cleanedText = cleanedText.replace(/^```(?:json)?\s*\n?/i, '').replace(/\n?```\s*$/i, '');
+    }
 
     // Parse the JSON response
-    let extractedData = JSON.parse(responseText);
+    let extractedData = JSON.parse(cleanedText);
 
     // Ensure all fields are present and are arrays
     extractedData = {
@@ -103,7 +143,7 @@ IMPORTANT:
       timestamp: new Date().toISOString(),
     };
   } catch (error) {
-    console.error('Gemini API Error:', error);
+    console.error('AI Skill Extraction Error:', error);
     
     if (error.message && error.message.includes('JSON.parse')) {
       throw new Error('Failed to parse AI response. Please try again.');
@@ -194,10 +234,10 @@ export const extractSkillsWithKeywords = (cvText) => {
  */
 export const extractSkills = async (cvText) => {
   try {
-    // Try Gemini extraction first
+    // Try AI extraction first
     return await extractSkillsWithGemini(cvText);
   } catch (error) {
-    console.warn('⚠️ Gemini extraction failed, falling back to keyword-based extraction:', error.message);
+    console.warn('⚠️ AI extraction failed, falling back to keyword-based extraction:', error.message);
     
     // Fallback to keyword-based extraction
     try {

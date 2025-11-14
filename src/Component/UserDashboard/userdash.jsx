@@ -26,6 +26,8 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
+import { isAdmin } from "../../services/adminAuthService";
+import Sidebar from '../Sidebar/Sidebar';
 
 // --- Asset Imports (adjust paths if necessary) ---
 import job1 from "./../../Assets/frontend.jpg";
@@ -36,7 +38,6 @@ import course1 from "./../../Assets/data.jpg";
 import course2 from "./../../Assets/design.jpg";
 import course3 from "./../../Assets/digital.jpg";
 import course4 from "./../../Assets/datasci.jpg";
-import banner from "./../../Assets/banner.jpg";
 
 ChartJS.register(
   CategoryScale,
@@ -82,8 +83,6 @@ export default function UserDash() {
   const navigate = useNavigate();
 
   // UI state
-  const [currentView, setCurrentView] = useState("dashboard");
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   // Auth & Profile
@@ -91,6 +90,7 @@ export default function UserDash() {
   const [user, setUser] = useState(null); // profile document from Firestore
   const [authLoading, setAuthLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(true);
+  const [userIsAdmin, setUserIsAdmin] = useState(false);
 
   // Collections
   const [allJobs, setAllJobs] = useState([]);
@@ -273,9 +273,17 @@ export default function UserDash() {
 
   /* ------------------- Auth: listen for signed-in user ------------------- */
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
+    const unsubscribe = onAuthStateChanged(auth, async (u) => {
       setCurrentUser(u);
       setAuthLoading(false);
+      
+      // Check if user is admin
+      if (u) {
+        const adminStatus = await isAdmin(u.uid);
+        setUserIsAdmin(adminStatus);
+      } else {
+        setUserIsAdmin(false);
+      }
     });
     return () => unsubscribe();
   }, []);
@@ -525,145 +533,9 @@ export default function UserDash() {
       }}
     >
       <div style={{ display: "flex" }}>
-        <aside
-          style={{
-            position: "fixed",
-            left: 0,
-            top: 0,
-            height: "100%",
-            width: sidebarOpen ? 256 : 80,
-            background: "linear-gradient(180deg, #1a1f3a 0%, #0f1420 100%)",
-            borderRight: `1px solid rgba(99, 102, 241, 0.2)`,
-            zIndex: 40,
-            overflowY: "auto",
-            boxShadow: "4px 0 20px rgba(0, 0, 0, 0.3)",
-          }}
-        >
-          <div style={{ padding: 24 }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                marginBottom: 32,
-              }}
-            >
-              <svg
-                style={{ width: 40, height: 40, filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.6))" }}
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21"
-                  stroke="#6366f1"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              {sidebarOpen && (
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ 
-                    fontWeight: "bold", 
-                    fontSize: "1.3rem",
-                    background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}>
-                    {config.app_title}
-                  </span>
-                </div>
-              )}
-            </div>
+        <Sidebar />
 
-            <nav style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {[
-                { id: "dashboard", label: "Dashboard", icon: "📊" },
-                { id: "jobs", label: "Jobs", icon: "💼" },
-                { id: "resources", label: "Resources", icon: "📚" },
-                { id: "profile", label: "Profile", icon: "👤" },
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (item.id === "profile") {
-                      navigate("/ProfilePage");
-                    } else if (item.id === "jobs") {
-                      navigate("/jobs");
-                    } else if (item.id === "resources") {
-                      navigate("/courseList");
-                    } else {
-                      setCurrentView(item.id);
-                    }
-                  }}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: "12px 16px",
-                    borderRadius: 12,
-                    border: "none",
-                    background:
-                      currentView === item.id 
-                        ? "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)" 
-                        : "transparent",
-                    color: currentView === item.id ? "#a5b4fc" : config.text_color,
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    boxShadow: currentView === item.id ? "0 4px 15px rgba(99, 102, 241, 0.2)" : "none",
-                  }}
-                >
-                  <span style={{ fontSize: baseFontSize * 1.25 }}>{item.icon}</span>
-                  {sidebarOpen && <span>{item.label}</span>}
-                </button>
-              ))}
-
-              <button
-                onClick={() => {
-                  auth.signOut();
-                  navigate("/login");
-                }}
-                style={{
-                  marginTop: 16,
-                  background: "transparent",
-                  border: "none",
-                  color: "#ef4444",
-                  padding: "12px 16px",
-                  textAlign: "left",
-                  cursor: "pointer",
-                }}
-              >
-                <span style={{ fontSize: baseFontSize * 1.25 }}>🚪</span>
-                {sidebarOpen && <span>Logout</span>}
-              </button>
-            </nav>
-          </div>
-
-          <div
-            style={{
-              position: "absolute",
-              bottom: 24,
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          >
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              style={{
-                padding: 8,
-                borderRadius: 8,
-                border: `1px solid ${config.secondary_color}`,
-                background: config.card_background,
-              }}
-            >
-              {sidebarOpen ? "◀" : "▶"}
-            </button>
-          </div>
-        </aside>
-
-        <main style={{ marginLeft: sidebarOpen ? 256 : 80, flex: 1, minHeight: "100vh" }}>
+        <main style={{ flex: 1, minHeight: "100vh" }}>
           <header
             style={{
               background: config.card_background,
@@ -743,46 +615,19 @@ export default function UserDash() {
           </header>
 
           <div style={{ padding: 24 }}>
-            {currentView === "dashboard" && (
-              <DashboardView
-                user={user}
-                config={config}
-                baseFontSize={baseFontSize}
-                lineData={lineData}
-                lineOptions={lineOptions}
-                doughnutData={doughnutData}
-                doughnutOptions={doughnutOptions}
-                barData={barData}
-                barOptions={barOptions}
-                jobs={suggestedJobs}
-                courses={suggestedCourses}
-              />
-            )}
-
-            {currentView === "jobs" && <JobsView config={config} jobs={suggestedJobs} />}
-
-            {currentView === "resources" && (
-              <ResourcesView config={config} courses={suggestedCourses} user={user} />
-            )}
-
-            {currentView === "profile" && (
-              <ProfileView
-                user={user}
-                setUser={setUser}
-                editingProfile={editingProfile}
-                setEditingProfile={setEditingProfile}
-                profileTab={profileTab}
-                setProfileTab={setProfileTab}
-                handleSaveProfile={handleSaveProfile}
-                handleAddSkill={handleAddSkill}
-                handleRemoveSkill={handleRemoveSkill}
-                handleAddProject={handleAddProject}
-                handleUpdateProject={handleUpdateProject}
-                handleRemoveProject={handleRemoveProject}
-                config={config}
-                baseFontSize={baseFontSize}
-              />
-            )}
+            <DashboardView
+              user={user}
+              config={config}
+              baseFontSize={baseFontSize}
+              lineData={lineData}
+              lineOptions={lineOptions}
+              doughnutData={doughnutData}
+              doughnutOptions={doughnutOptions}
+              barData={barData}
+              barOptions={barOptions}
+              jobs={suggestedJobs}
+              courses={suggestedCourses}
+            />
           </div>
         </main>
       </div>
@@ -951,7 +796,7 @@ function DashboardView({
 
       {/* Jobs */}
       <section style={{ marginBottom: 32 }}>
-        <h3 style={{ fontSize: baseFontSize * 1.5, fontWeight: 700, color: config.text_color, marginBottom: 16 }}>
+        <h3 style={{ fontSize: baseFontSize * 1.5, fontWeight: 700, color: "#ffffff", marginBottom: 16 }}>
           {config.jobs_section_title} (Suggested for you)
         </h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
@@ -961,10 +806,10 @@ function DashboardView({
                 <div style={{ width: "100%", height: 140, overflow: "hidden", borderRadius: 8, marginBottom: 12 }}>
                   <img src={job.image} alt={job.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </div>
-                <h4 style={{ margin: 0, fontWeight: 700, color: config.text_color }}>{job.title}</h4>
-                <p style={{ color: "#6b7280", margin: "8px 0" }}>{job.company}</p>
-                <p style={{ color: "#9ca3af", marginBottom: 12 }}>{job.location} • {job.type}</p>
-                <button style={{ width: "100%", padding: 10, background: config.primary_color, color: "#fff", border: "none", borderRadius: 8 }}>Apply Now</button>
+                <h4 style={{ margin: 0, fontWeight: 700, color: "#ffffff" }}>{job.title}</h4>
+                <p style={{ color: "#e4e6eb", margin: "8px 0" }}>{job.company}</p>
+                <p style={{ color: "#b8bcc8", marginBottom: 12 }}>{job.location} • {job.type}</p>
+                <a href="#" style={{ display: "block", width: "100%", padding: 10, background: config.primary_color, color: "#fff", border: "none", borderRadius: 8, textAlign: "center", textDecoration: "none" }}>Apply Now</a>
               </article>
             ))
           ) : (
@@ -975,7 +820,7 @@ function DashboardView({
 
       {/* Courses */}
       <section>
-        <h3 style={{ fontSize: baseFontSize * 1.5, fontWeight: 700, color: config.text_color, marginBottom: 16 }}>{config.resources_section_title}</h3>
+        <h3 style={{ fontSize: baseFontSize * 1.5, fontWeight: 700, color: "#ffffff", marginBottom: 16 }}>{config.resources_section_title}</h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
           {coursesWithImages.length > 0 ? (
             coursesWithImages.map((course) => {
@@ -986,10 +831,10 @@ function DashboardView({
                   <div style={{ width: "100%", height: 140, overflow: "hidden", borderRadius: 8, marginBottom: 12 }}>
                     <img src={course.image || course.logo} alt={course.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   </div>
-                  <h4 style={{ margin: 0, fontWeight: 700, color: config.text_color }}>{course.title}</h4>
-                  <p style={{ color: "#6b7280", margin: "8px 0" }}>{course.platform}</p>
+                  <h4 style={{ margin: 0, fontWeight: 700, color: "#ffffff" }}>{course.title}</h4>
+                  <p style={{ color: "#e4e6eb", margin: "8px 0" }}>{course.platform}</p>
                   {skills.length > 0 && (
-                    <p style={{ color: "#9ca3af", fontSize: "0.85rem", margin: "4px 0" }}>Skills: {skills.join(", ")}</p>
+                    <p style={{ color: "#b8bcc8", fontSize: "0.85rem", margin: "4px 0" }}>Skills: {skills.join(", ")}</p>
                   )}
                   {course.costIndicator && (
                     <p style={{ margin: "4px 0" }}>
@@ -1007,7 +852,7 @@ function DashboardView({
                   )}
                   <div style={{ marginBottom: 12, marginTop: 12 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                      <span style={{ color: "#6b7280" }}>Progress</span>
+                      <span style={{ color: "#e4e6eb" }}>Progress</span>
                       <span style={{ color: config.accent_color, fontWeight: 700 }}>{progress}%</span>
                     </div>
                     <div style={{ width: "100%", height: 8, background: config.secondary_color, borderRadius: 4, overflow: "hidden" }}>

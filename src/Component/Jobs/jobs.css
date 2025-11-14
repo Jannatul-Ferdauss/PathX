@@ -89,8 +89,11 @@
 
 /* --- Job Card --- */
 .job-card {
+  
+  background: linear-gradient(180deg, #0b0d12 0%, #0f1116 100%) ;
+
   position: relative;
-  background: linear-gradient(135deg, rgba(15,17,24,0.95), rgba(124,58,237,0.03));
+  background: linear-gradient(135deg, rgba(15,17,24,0.95), rgba(124,58,237,0.03)) !important;
   border-radius: 20px;
   padding: 1.5rem;
   cursor: pointer;

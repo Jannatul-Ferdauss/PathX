@@ -365,7 +365,7 @@ export default function SkillExtractionDisplay({
           ) : (
             <div style={{ marginBottom: 20 }}>
               <label style={{ display: 'block', marginBottom: 8, fontSize: 13, fontWeight: 600, color: '#a5b4fc' }}>
-                Select a CV file (.txt only):
+                Select a CV file (.pdf or .txt):
               </label>
               <div
                 onClick={() => fileInputRef.current?.click()}
@@ -389,13 +389,13 @@ export default function SkillExtractionDisplay({
               >
                 <p style={{ margin: 0, fontSize: 14, color: '#e4e6eb', fontWeight: 600 }}>📄 Click to upload CV file</p>
                 <p style={{ margin: '4px 0 0 0', fontSize: 12, color: '#a5b4fc' }}>
-                  {selectedFile ? selectedFile.name : 'or drag and drop here'}
+                  {selectedFile ? selectedFile.name : 'PDF or TXT format (max 5MB)'}
                 </p>
               </div>
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".txt"
+                accept=".pdf,.txt"
                 onChange={handleFileSelect}
                 style={{ display: 'none' }}
               />

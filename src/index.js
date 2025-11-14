@@ -9,6 +9,9 @@ import Login from './Component/Login/login.jsx';
 import ProfilePage from './Component/Profile/ProfilePage.jsx';
 import Course from './Component/Course/courseList.jsx';
 import JobList from './Component/Jobs/jobs.jsx';
+import Roadmap from './Component/Roadmap/Roadmap';
+import CareerBot from './Component/CareerBot/CareerBot';
+import AdminDashboard from './Component/AdminDashboard/AdminDashboard';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +24,9 @@ root.render(
         <Route path="/ProfilePage" element={<ProfilePage />} />
         <Route path="/courseList" element={<Course />} />
         <Route path="/jobs" element={<JobList />} />
+        <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/careerbot" element={<CareerBot />} />
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

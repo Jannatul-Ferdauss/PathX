@@ -4,12 +4,12 @@ import "./jobs.css";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import Sidebar from '../Sidebar/Sidebar';
 import { getAIJobRecommendations, getJobPlatforms } from "../JobMatching/jobMatchingService";
 import { analyzeSkillGaps } from "../JobMatching/skillGapService";
 
 export default function Jobs() {
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [jobs, setJobs] = useState([]);
   const [filter, setFilter] = useState("All");
   const [selectedJob, setSelectedJob] = useState(null);
@@ -105,126 +105,10 @@ export default function Jobs() {
         background: "#0a0e27",
       }}
     >
-      {/* Sidebar - Dark Theme */}
-      <aside
-        style={{
-          position: "fixed",
-          left: 0,
-          top: 0,
-          height: "100%",
-          width: sidebarOpen ? 256 : 80,
-          background: "linear-gradient(180deg, #1a1f3a 0%, #0f1420 100%)",
-          borderRight: "1px solid rgba(99, 102, 241, 0.2)",
-          zIndex: 40,
-          overflowY: "auto",
-          boxShadow: "4px 0 20px rgba(0, 0, 0, 0.3)",
-        }}
-      >
-        <div style={{ padding: 24 }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              marginBottom: 32,
-            }}
-          >
-            <svg
-              style={{ width: 40, height: 40, filter: "drop-shadow(0 0 8px rgba(99, 102, 241, 0.6))" }}
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21"
-                stroke="#6366f1"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            {sidebarOpen && (
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    fontSize: "1.3rem",
-                    background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  PathX
-                </span>
-              </div>
-            )}
-          </div>
-
-          <nav style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {[
-              { id: "dashboard", label: "Dashboard", icon: "📊", route: "/userdash" },
-              { id: "jobs", label: "Jobs", icon: "💼", route: "/jobs" },
-              { id: "resources", label: "Resources", icon: "📚", route: "/courseList" },
-              { id: "profile", label: "Profile", icon: "👤", route: "/ProfilePage" },
-            ].map((item) => (
-              <button
-                key={item.id}
-                onClick={() => navigate(item.route)}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  padding: "12px 16px",
-                  borderRadius: 12,
-                  border: "none",
-                  background:
-                    window.location.pathname === item.route
-                      ? "linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%)"
-                      : "transparent",
-                  color:
-                    window.location.pathname === item.route
-                      ? "#a5b4fc"
-                      : "#e4e6eb",
-                  cursor: "pointer",
-                  transition: "all 0.2s ease",
-                  boxShadow: window.location.pathname === item.route ? "0 4px 15px rgba(99, 102, 241, 0.2)" : "none",
-                }}
-              >
-                <span style={{ fontSize: 20 }}>{item.icon}</span>
-                {sidebarOpen && <span>{item.label}</span>}
-              </button>
-            ))}
-          </nav>
-        </div>
-
-        <div
-          style={{
-            position: "absolute",
-            bottom: 24,
-            left: "50%",
-            transform: "translateX(-50%)",
-          }}
-        >
-          <button
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-            style={{
-              padding: 8,
-              borderRadius: 8,
-              border: "1px solid rgba(99, 102, 241, 0.3)",
-              background: "rgba(99, 102, 241, 0.1)",
-              color: "#a5b4fc",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-          >
-            {sidebarOpen ? "◀" : "▶"}
-          </button>
-        </div>
-      </aside>
-
+      {/* Sidebar */}
+      <Sidebar />
       {/* Main Content */}
-      <div style={{ marginLeft: sidebarOpen ? 256 : 80, flex: 1 }}>
+      <div style={{ flex: 1 }}>
         <div className="jobs-page">
           <h1>Opportunities for Students</h1>
 

@@ -12,5 +12,5 @@ if (!GEMINI_API_KEY) {
 
 export const GEMINI_CONFIG = {
   apiKey: GEMINI_API_KEY,
-  model: 'gemini-2.0-flash-exp', // Using Gemini 2.0 Flash Experimental
-}; 
+  model: 'gemini-2.5-flash',
+};

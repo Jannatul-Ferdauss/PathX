@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import "./navbar.css"; // your navbar CSS
 
 function Navbar({ setAuthOpen }) {

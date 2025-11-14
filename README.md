@@ -1,245 +1,440 @@
-<div align="center">
+# PathX
 
-# 🚀 PathX
+## Project Overview
 
-### Your Gateway to Career Success
+PathX is a comprehensive career development platform designed to connect youth with employment opportunities aligned with SDG 8 (Decent Work and Economic Growth). The platform provides personalized job recommendations, AI-powered career guidance, skill extraction from CVs, roadmap generation, and learning resources tailored to individual career goals.
 
-[![React](https://img.shields.io/badge/React-18.0+-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
-[![Firebase](https://img.shields.io/badge/Firebase-9.0+-FFCA28?style=for-the-badge&logo=firebase&logoColor=white)](https://firebase.google.com/)
-[![Chart.js](https://img.shields.io/badge/Chart.js-4.0+-FF6384?style=for-the-badge&logo=chart.js&logoColor=white)](https://www.chartjs.org/)
-[![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
+## Tech Stack
 
----
+### Frontend
+- **React 18.3.1** - UI library for building interactive user interfaces
+- **React Router DOM 6.28.0** - Client-side routing
+- **Chart.js 4.4.7** & **react-chartjs-2 5.3.0** - Data visualization
+- **html2canvas 1.4.1** & **jspdf 2.5.2** - PDF generation and export
+- **pdfjs-dist 5.4.394** - PDF parsing for skill extraction
 
-### 🌟 Empowering Learners with Personalized Career Paths
+### Backend & Services
+- **Firebase 10.14.1** - Backend-as-a-Service
+  - Firebase Authentication - User authentication and authorization
+  - Cloud Firestore - NoSQL database for storing user profiles, jobs, courses, and roadmaps
+  - Firebase Storage - File storage for user-uploaded CVs and profile pictures
 
-PathX is a modern learning platform that connects users with tailored courses and job opportunities based on their skills and career goals.
+### AI Integration
+- **Google Gemini AI API** - Powers multiple AI features:
+  - Skill extraction from PDF/text CVs
+  - Job matching and recommendations
+  - Career roadmap generation
+  - CV optimization suggestions
+  - AI career mentor chatbot
 
-</div>
+### Additional Libraries
+- **react-icons 5.4.0** - Icon components
+- **Web Vitals** - Performance monitoring
 
----
-
-## ✨ Features
-
-<table>
-<tr>
-<td width="50%">
-
-### 🎯 Personalized Learning
-- **Smart Course Recommendations** based on your desired skills
-- **Real-time Progress Tracking** with interactive charts
-- **Skill-based Job Matching** to accelerate your career
-
-</td>
-<td width="50%">
-
-### 🎨 Modern Dark UI
-- **Beautiful Gradient Themes** throughout the application
-- **Responsive Design** for all screen sizes
-- **Smooth Animations** and intuitive navigation
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-### 📊 Analytics Dashboard
-- **Visual Progress Charts** (Line, Bar, Doughnut)
-- **Learning Insights** with gradient visualizations
-- **Goal Tracking** to monitor your achievements
-
-</td>
-<td width="50%">
-
-### 🔐 Secure Authentication
-- **Firebase Authentication** for secure login
-- **User Profiles** with editable skills and goals
-- **Data Privacy** with real-time synchronization
-
-</td>
-</tr>
-</table>
-
----
-
-## 🚀 Quick Start
-
-<details open>
-<summary><b>📦 Installation</b></summary>
-
-```bash
-# Clone the repository
-git clone https://github.com/Jannatul-Ferdauss/PathX.git
-
-# Navigate to the project directory
-cd PathX-main
-
-# Install dependencies
-npm install
-```
-
-</details>
-
-<details open>
-<summary><b>⚡ Running the Application</b></summary>
-
-```bash
-# Start development server
-npm start
-```
-
-The application will open at [http://localhost:3000](http://localhost:3000)
-
-</details>
-
-<details>
-<summary><b>🔧 Additional Commands</b></summary>
-
-| Command | Description |
-|---------|-------------|
-| `npm test` | Launch the test runner in interactive watch mode |
-| `npm run build` | Build the app for production to the `build` folder |
-| `npm run eject` | Eject from Create React App (one-way operation) |
-
-</details>
-
----
-
-## 🏗️ Tech Stack
-
-<div align="center">
-
-| Frontend | Backend | Data Visualization |
-|----------|---------|-------------------|
-| ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) | ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=white) | ![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=chart.js&logoColor=white) |
-| ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black) | ![Firestore](https://img.shields.io/badge/Firestore-FFCA28?style=flat&logo=firebase&logoColor=white) | ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white) |
-
-</div>
-
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 PathX/
-├── 📂 public/
+├── public/
 │   ├── index.html
 │   ├── manifest.json
-│   └── 🖼️ images/
-├── 📂 src/
-│   ├── 🔥 firebase.js
-│   ├── 📱 App.js
-│   └── 📂 Component/
-│       ├── 🏠 Homepage/
-│       ├── 📊 UserDashboard/
-│       ├── 📚 Course/
-│       ├── 💼 Jobs/
-│       ├── 👤 Profile/
-│       ├── 🔐 Login/
-│       ├── 🧭 Navbar/
-│       └── 🦶 Footer/
-└── 📦 package.json
+│   └── images/
+├── src/
+│   ├── firebase.js                      # Firebase configuration
+│   ├── App.js                           # Main application component
+│   ├── index.js                         # Application entry point
+│   ├── Component/
+│   │   ├── Homepage/                    # Landing page
+│   │   ├── Login/                       # Authentication (Login/Signup)
+│   │   ├── UserDashboard/               # User dashboard with analytics
+│   │   ├── Jobs/                        # Job listings with AI matching
+│   │   ├── Course/                      # Learning resources
+│   │   ├── Roadmap/                     # AI-generated career roadmaps
+│   │   ├── CareerBot/                   # AI career mentor chatbot
+│   │   ├── Profile/                     # User profile management
+│   │   ├── SkillExtraction/             # AI CV skill extraction
+│   │   ├── CVAssistant/                 # AI-powered CV optimization
+│   │   ├── JobMatching/                 # AI job recommendation engine
+│   │   ├── AdminDashboard/              # Admin panel for content management
+│   │   ├── Sidebar/                     # Unified navigation sidebar
+│   │   ├── Navbar/                      # Navigation bar
+│   │   └── Footer/                      # Footer component
+│   ├── config/
+│   │   └── geminiConfig.js              # Gemini AI configuration
+│   ├── services/
+│   │   ├── adminAuthService.js          # Admin authentication service
+│   │   └── apiProviderService.js        # API provider management
+│   └── utils/
+│       ├── skillExtractor.js            # PDF/text skill extraction utility
+│       └── roadmapService.js            # Roadmap generation service
+└── package.json
 ```
 
----
+## Setup Instructions
 
-## 🎨 Key Components
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- Firebase account
+- Google Gemini API key
 
-<table>
-<tr>
-<td width="33%">
+### Installation Steps
 
-### 🏠 Homepage
-- Hero slider with featured content
-- Job and course highlights
-- Dark theme with PathX branding
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/Jannatul-Ferdauss/PathX.git
+   cd PathX-real/PathX-main
+   ```
 
-</td>
-<td width="33%">
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-### 📊 Dashboard
-- Personalized course recommendations
-- Interactive analytics charts
-- Goal-based learning paths
+3. **Firebase Configuration**
+   
+   Create a `src/firebase.js` file with your Firebase credentials:
+   ```javascript
+   import { initializeApp } from 'firebase/app';
+   import { getAuth } from 'firebase/auth';
+   import { getFirestore } from 'firebase/firestore';
+   import { getStorage } from 'firebase/storage';
 
-</td>
-<td width="33%">
+   const firebaseConfig = {
+     apiKey: "YOUR_API_KEY",
+     authDomain: "YOUR_AUTH_DOMAIN",
+     projectId: "YOUR_PROJECT_ID",
+     storageBucket: "YOUR_STORAGE_BUCKET",
+     messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+     appId: "YOUR_APP_ID"
+   };
 
-### 👤 Profile
-- Editable user information
-- Skill management
-- Career goal tracking
+   const app = initializeApp(firebaseConfig);
+   export const auth = getAuth(app);
+   export const db = getFirestore(app);
+   export const storage = getStorage(app);
+   ```
 
-</td>
-</tr>
-</table>
+4. **Gemini AI Configuration**
+   
+   Create a `src/config/geminiConfig.js` file:
+   ```javascript
+   export const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY';
+   export const GEMINI_MODEL = 'gemini-2.0-flash-exp';
+   export const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
+   ```
 
----
+5. **Environment Variables (Optional)**
+   
+   Create a `.env` file in the root directory:
+   ```
+   REACT_APP_FIREBASE_API_KEY=your_firebase_api_key
+   REACT_APP_GEMINI_API_KEY=your_gemini_api_key
+   ```
 
-## 🌈 UI Highlights
+6. **Run the Application**
+   ```bash
+   npm start
+   ```
+   
+   The application will open at `http://localhost:3000`
 
-> **Dark Theme Design** - Beautiful gradients and purple accents throughout
-> 
-> **Gradient Charts** - Line, bar, and doughnut charts with radial gradients
-> 
-> **Responsive Layout** - Seamless experience across all devices
+### Build for Production
+```bash
+npm run build
+```
 
----
+## Firebase Firestore Database Structure
 
-## 🔥 Firebase Integration
+### Collections
 
-- **Authentication**: Secure user login and registration
-- **Firestore**: Real-time database for courses, jobs, and user profiles
-- **Real-time Updates**: Live data synchronization with `onSnapshot`
+1. **users** - User profiles
+   ```javascript
+   {
+     id: string,
+     name: string,
+     email: string,
+     title: string,
+     bio: string,
+     skills: string[],
+     careerInterests: string,
+     basic: {
+       location: string,
+       availability: string,
+       age: string,
+       exp: string,
+       desiredSkill: string[],
+       rating: string
+     },
+     experiences: array,
+     education: array,
+     projects: array,
+     cvText: string,
+     cvLink: string,
+     profilePicture: string,
+     isAdmin: boolean
+   }
+   ```
 
----
+2. **jobs** - Job listings
+   ```javascript
+   {
+     id: string,
+     title: string,
+     company: string,
+     location: string,
+     type: string,
+     description: string,
+     requirements: string[],
+     salary: string,
+     postedDate: timestamp,
+     logo: string
+   }
+   ```
 
-## 📈 Analytics Features
+3. **courses** - Learning resources
+   ```javascript
+   {
+     id: string,
+     title: string,
+     platform: string,
+     url: string,
+     relatedSkills: string[],
+     costIndicator: string,
+     logo: string
+   }
+   ```
 
-<div align="center">
+4. **roadmaps** - AI-generated career roadmaps
+   ```javascript
+   {
+     id: string,
+     userId: string,
+     targetRole: string,
+     currentSkills: string,
+     timeframe: number,
+     weeklyHours: number,
+     generatedAt: timestamp,
+     roadmapContent: object
+   }
+   ```
 
-| Chart Type | Purpose | Gradient Colors |
-|-----------|---------|-----------------|
-| 📈 **Line Chart** | Track learning progress over time | Blue to purple gradient fill |
-| 📊 **Bar Chart** | Compare course completion rates | Multi-color gradient bars |
-| 🍩 **Doughnut Chart** | Visualize skill distribution | 5-color radial gradients |
+5. **conversations** - Career bot chat history
+   ```javascript
+   {
+     id: string,
+     userId: string,
+     messages: array,
+     createdAt: timestamp,
+     updatedAt: timestamp
+   }
+   ```
 
-</div>
+## API Documentation
 
----
+### Google Gemini AI API
 
-## 🤝 Contributing
+**Base URL:** `https://generativelanguage.googleapis.com/v1beta/models`
 
-Contributions are welcome! Feel free to open issues or submit pull requests.
+**Model Used:** `gemini-2.0-flash-exp`
+
+**Authentication:** API Key passed as query parameter
+
+#### Features Powered by Gemini AI
+
+1. **Skill Extraction** (`src/utils/skillExtractor.js`)
+   - Endpoint: `/gemini-2.0-flash-exp:generateContent`
+   - Input: CV text (from PDF or TXT file)
+   - Output: Structured JSON with extracted skills
+
+2. **Job Matching** (`src/Component/JobMatching/jobMatchingService.js`)
+   - Analyzes user skills and job requirements
+   - Provides match scores and recommendations
+   - Generates skill gap analysis
+
+3. **Career Roadmap Generation** (`src/utils/roadmapService.js`)
+   - Creates personalized learning paths
+   - Structures weekly milestones and resources
+   - Adapts to user's time availability
+
+4. **Career Bot** (`src/Component/CareerBot/careerBotService.js`)
+   - Real-time conversational AI career guidance
+   - Context-aware responses based on user profile
+   - Provides career advice, interview prep, and skill recommendations
+
+5. **CV Optimization** (`src/Component/CVAssistant/cvAssistantService.js`)
+   - Generates professional summaries
+   - Creates ATS-friendly bullet points
+   - Provides LinkedIn and portfolio recommendations
+
+### Firebase APIs
+
+**Authentication API**
+- Email/Password authentication
+- User session management
+- Admin role verification
+
+**Firestore API**
+- Real-time data synchronization with `onSnapshot`
+- CRUD operations for all collections
+- Query filtering and sorting
+
+**Storage API**
+- CV file uploads
+- Profile picture storage
+- Secure file access with authentication
+
+## Admin Setup
+
+### Creating an Admin User
+
+1. **Register a Regular User**
+   - Sign up through the normal registration process
+
+2. **Promote to Admin**
+   
+   Run this script in Firebase Console or use the provided `makeAdmin.js`:
+   ```javascript
+   import { doc, updateDoc } from 'firebase/firestore';
+   import { db } from './firebase';
+
+   const makeAdmin = async (userEmail) => {
+     const userDoc = doc(db, 'users', userEmail);
+     await updateDoc(userDoc, { isAdmin: true });
+   };
+   ```
+
+3. **Admin Features**
+   - Add/Edit/Delete jobs
+   - Add/Edit/Delete courses
+   - View user analytics
+   - Manage platform content
+
+## Features
+
+### User Features
+- **Authentication** - Secure login and registration
+- **Profile Management** - Edit personal information, skills, and career goals
+- **Skill Extraction** - Upload CV (PDF/TXT) and extract skills using AI
+- **Job Recommendations** - AI-powered job matching based on skills
+- **Learning Resources** - Curated courses filtered by desired skills
+- **Career Roadmap** - AI-generated personalized learning paths
+- **Career Mentor** - AI chatbot for career guidance and advice
+- **CV Assistant** - AI-powered CV optimization and PDF export
+- **Dashboard Analytics** - Visual progress tracking with charts
+
+### Admin Features
+- **Job Management** - Add, edit, and delete job postings
+- **Course Management** - Manage learning resources
+- **User Analytics** - View platform statistics
+- **Content Moderation** - Monitor and manage user-generated content
+
+## Seed Data
+
+The application requires initial seed data for jobs and courses. Admin users can add this data through the Admin Dashboard.
+
+### Sample Job Entry
+```javascript
+{
+  title: "Frontend Developer",
+  company: "Tech Company",
+  location: "Dhaka, Bangladesh",
+  type: "Full-time",
+  description: "We are looking for a skilled frontend developer...",
+  requirements: ["React", "JavaScript", "CSS", "HTML"],
+  salary: "BDT 50,000 - 80,000",
+  postedDate: Firebase.Timestamp.now(),
+  logo: "/images/company-logo.png"
+}
+```
+
+### Sample Course Entry
+```javascript
+{
+  title: "Complete React Developer Course",
+  platform: "Udemy",
+  url: "https://www.udemy.com/course/react-complete",
+  relatedSkills: ["React", "JavaScript", "Frontend"],
+  costIndicator: "Paid",
+  logo: "/images/udemy.png"
+}
+```
+
+## External APIs and Services
+
+### Required Services
+
+1. **Firebase**
+   - Create a Firebase project at https://console.firebase.google.com/
+   - Enable Authentication (Email/Password)
+   - Enable Cloud Firestore
+   - Enable Firebase Storage
+   - Copy configuration to `src/firebase.js`
+
+2. **Google Gemini AI**
+   - Get API key from https://ai.google.dev/
+   - Enable Gemini API in your Google Cloud Console
+   - Add API key to `src/config/geminiConfig.js`
+
+### API Rate Limits and Quotas
+
+- **Gemini AI**: Free tier includes 60 requests per minute
+- **Firebase**: Spark (free) plan has daily limits on reads/writes
+- **Firebase Storage**: Free tier includes 1GB storage and 10GB/month transfer
+
+## Development
+
+### Available Scripts
+
+- `npm start` - Runs the app in development mode
+- `npm test` - Launches the test runner
+- `npm run build` - Builds the app for production
+- `npm run eject` - Ejects from Create React App (irreversible)
+
+### Code Structure Guidelines
+
+- Components follow functional component pattern with hooks
+- Firestore operations use real-time listeners (`onSnapshot`)
+- AI features include loading states and error handling
+- All external API calls wrapped in try-catch blocks
+- Dark theme with consistent color palette (#0a0e27, #1a1f3a, #6366f1)
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Firebase Connection Error**
+   - Verify Firebase configuration in `firebase.js`
+   - Check Firebase project settings and rules
+
+2. **Gemini AI Rate Limit**
+   - Monitor API usage in Google Cloud Console
+   - Implement request throttling if needed
+
+3. **PDF Parsing Issues**
+   - Ensure pdfjs-dist worker is properly configured
+   - Check PDF file format compatibility
+
+4. **Build Errors**
+   - Clear node_modules and reinstall: `rm -rf node_modules && npm install`
+   - Check Node.js version compatibility
+
+## Contributing
+
+Contributions are welcome. Please follow these steps:
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
 5. Open a Pull Request
 
----
+## License
 
-## 📄 License
+This project is licensed under the MIT License.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Contact
 
----
+For questions or support, please contact the PathX development team.
 
-## 🌟 Acknowledgments
-
-- Built with [Create React App](https://create-react-app.dev/)
-- Powered by [Firebase](https://firebase.google.com/)
-- Charts by [Chart.js](https://www.chartjs.org/)
-
----
-
-<div align="center">
-
-### 💜 Made with passion by the PathX Team
-
-[![GitHub](https://img.shields.io/badge/GitHub-Jannatul--Ferdauss-181717?style=for-the-badge&logo=github)](https://github.com/Jannatul-Ferdauss/PathX)
-
-**⭐ Star this repo if you find it helpful!**
-
-</div>
+Repository: https://github.com/Jannatul-Ferdauss/PathX

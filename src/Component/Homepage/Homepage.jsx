@@ -106,11 +106,11 @@ export default function Homepage() {
         <h2 className="section-heading">Featured Jobs</h2>
         <div className="grid">
           {jobs.map((job, i) => (
-            <div className="job-card" key={i}>
+            <div className="course-card" key={i}>
               <img src={job.image} alt={job.title} className="card-img" />
               <div className="card-content">
-                <h3 className="job-title">{job.title}</h3>
-                <p className="job-company">{job.company}</p>
+                <h3 className="course-title">{job.title}</h3>
+                <p className="course-description">{job.company}</p>
               </div>
             </div>
           ))}
