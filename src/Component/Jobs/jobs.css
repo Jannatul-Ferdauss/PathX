@@ -218,16 +218,58 @@
   font-weight: 500;
 }
 
+/* Quick match indicator */
+.quick-match {
+  padding: 4px 8px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  color: #10b981;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Match badge animations */
+.match-badge {
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(124, 58, 237, 0.3);
+  }
+}
+
+/* Match header styling */
+.match-header {
+  animation: slideInFromTop 0.5s ease;
+}
+
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* --- Modal --- */
 .modal-backdrop {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.8); /* darker overlay */
+  background: rgba(0, 0, 0, 0.85); /* darker overlay */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 200;
   animation: fadeInBackdrop 0.3s ease;
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
@@ -235,7 +277,9 @@
   padding: 2.5rem;
   border-radius: 24px;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
   text-align: left;
   border: 1px solid rgba(124,58,237,0.3);
   box-shadow: 
@@ -244,6 +288,25 @@
     inset 0 1px 0 rgba(255,255,255,0.1);
   animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+}
+
+/* Custom scrollbar for modal */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: rgba(26, 31, 58, 0.5);
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #7C3AED, #A78BFA);
+  border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #6D28D9, #7C3AED);
 }
 
 .modal-content::before {
