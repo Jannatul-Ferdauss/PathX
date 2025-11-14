@@ -1066,12 +1066,12 @@ function JobsView({ config, jobs }) {
 
 // ResourcesView
 function ResourcesView({ config, courses, user }) {
-  // Helper function to clean URLs - removes quotes and ensures proper protocol
+
   const cleanUrl = (url) => {
     if (!url) return null;
-    // Remove surrounding quotes
+  
     let cleaned = url.trim().replace(/^"+|"+$/g, '');
-    // If URL doesn't start with http:// or https://, add https://
+
     if (cleaned && !cleaned.match(/^https?:\/\//i)) {
       cleaned = 'https://' + cleaned;
     }

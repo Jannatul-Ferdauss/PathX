@@ -1,0 +1,113 @@
+John Doe
+Frontend Developer | React Specialist
+Email: john.doe@example.com | Phone: +880-1234-567890
+Location: Dhaka, Bangladesh | LinkedIn: linkedin.com/in/johndoe
+
+PROFESSIONAL SUMMARY
+Passionate and detail-oriented Frontend Developer with 3+ years of experience building responsive, user-friendly web applications. Strong expertise in React.js, TypeScript, and modern JavaScript frameworks. Proven track record of delivering high-quality projects on time while collaborating effectively with cross-functional teams.
+
+TECHNICAL SKILLS
+Programming Languages: JavaScript, TypeScript, HTML5, CSS3, Python
+Frontend Frameworks: React.js, Next.js, Vue.js
+State Management: Redux, Redux Toolkit, Context API, Zustand
+Styling: Tailwind CSS, Material-UI, Styled Components, SASS, Bootstrap
+Tools & Technologies: Git, GitHub, VS Code, Webpack, Vite, npm, yarn
+Backend: Node.js, Express.js (basic knowledge)
+Databases: Firebase, MongoDB, PostgreSQL (basic)
+Other: REST APIs, GraphQL, Responsive Design, Agile/Scrum, Testing (Jest, React Testing Library)
+
+PROFESSIONAL SKILLS
+- Problem Solving & Analytical Thinking
+- Team Collaboration & Communication
+- Time Management & Organization
+- Attention to Detail
+- Adaptability & Quick Learning
+- Client Relationship Management
+
+WORK EXPERIENCE
+
+Senior Frontend Developer | Tech Solutions Ltd. | Dhaka, Bangladesh
+January 2022 - Present
+- Developed and maintained 15+ responsive web applications using React.js and Next.js
+- Implemented state management solutions with Redux Toolkit, improving app performance by 40%
+- Collaborated with UX/UI designers to create pixel-perfect interfaces
+- Integrated RESTful APIs and optimized API calls, reducing load times by 30%
+- Mentored 3 junior developers in React best practices and modern web development
+- Led code reviews and established coding standards for the frontend team
+- Technologies: React, Next.js, TypeScript, Tailwind CSS, Firebase
+
+Junior Web Developer | Digital Agency BD | Dhaka, Bangladesh
+July 2020 - December 2021
+- Built interactive user interfaces using HTML, CSS, JavaScript, and React
+- Converted design mockups from Figma/Adobe XD into functional websites
+- Maintained and updated 25+ client websites with bug fixes and feature enhancements
+- Worked directly with clients to understand requirements and deliver solutions
+- Optimized website performance and implemented SEO best practices
+- Technologies: HTML, CSS, JavaScript, React, Bootstrap, WordPress
+
+PROJECTS
+
+E-Commerce Platform - Full Stack (Personal Project)
+- Built a complete e-commerce application with product catalog, shopping cart, and checkout
+- Implemented user authentication, real-time inventory management, and order tracking
+- Technologies: React.js, Node.js, Express, Firebase, Stripe Payment Gateway
+- Features: User authentication, admin dashboard, payment integration, responsive design
+- GitHub: github.com/johndoe/ecommerce-platform
+- Live Demo: ecommerce-demo.vercel.app
+
+Task Management Dashboard - Team Collaboration Tool
+- Created a Trello-like task management system with drag-and-drop functionality
+- Implemented real-time updates using Firebase Realtime Database
+- Technologies: Next.js, TypeScript, Tailwind CSS, Firebase, Framer Motion
+- Features: Kanban boards, user roles, real-time collaboration, dark mode
+- Live Demo: taskmanager-app.vercel.app
+
+Personal Portfolio Website
+- Designed and developed a fully responsive portfolio showcasing projects and skills
+- Technologies: React.js, Framer Motion, Styled Components
+- Features: Smooth animations, contact form integration, blog section
+- Website: johndoe.dev
+
+Weather App - API Integration Project
+- Built a weather application using OpenWeather API
+- Technologies: React, Axios, Chart.js
+- Features: 7-day forecast, location search, temperature graphs
+
+EDUCATION
+
+Bachelor of Science in Computer Science & Engineering
+BRAC University, Dhaka, Bangladesh
+Graduated: June 2020 | CGPA: 3.75/4.00
+
+Relevant Coursework:
+- Web Development & Technologies
+- Data Structures & Algorithms
+- Database Management Systems
+- Software Engineering
+- Object-Oriented Programming
+
+CERTIFICATIONS
+- Meta Front-End Developer Professional Certificate (Coursera, 2023)
+- JavaScript Algorithms and Data Structures (freeCodeCamp, 2021)
+- Responsive Web Design (freeCodeCamp, 2020)
+- React - The Complete Guide (Udemy, 2021)
+- Advanced CSS and Sass (Udemy, 2020)
+
+ACHIEVEMENTS
+- Winner, Tech Hackathon 2022 (Best UI/UX Implementation)
+- Featured developer on Dev.to with 500+ followers
+- Open source contributor to popular React libraries (100+ contributions)
+- Speaker at Dhaka Web Dev Meetup 2023
+
+LANGUAGES
+- Bengali: Native
+- English: Fluent (IELTS: 7.5)
+- Hindi: Conversational
+
+INTERESTS & HOBBIES
+- Open Source Contribution
+- UI/UX Design & Animation
+- Web Performance Optimization
+- Technical Writing & Blogging
+- Teaching & Mentoring Junior Developers
+- Reading Tech Blogs & Documentation

@@ -8,6 +8,9 @@ import { doc, getDoc, setDoc, updateDoc, onSnapshot } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+// --- Skill Extraction Component ---
+import SkillExtractionDisplay from "../SkillExtraction/SkillExtractionDisplay";
+
 const PROFILE_TEMPLATE = {
   id: "",
   name: "",
@@ -54,6 +57,7 @@ export default function ProfilePage() {
   const [cvUploading, setCvUploading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentView, setCurrentView] = useState("profile");
+  const [showSkillExtraction, setShowSkillExtraction] = useState(false);
 
   // (Auth Listener is unchanged)
   useEffect(() => {
@@ -567,7 +571,27 @@ export default function ProfilePage() {
               </div>
 
               <div style={{ width: "100%" }}>
-                <h4 style={{ margin: 0, fontSize: 13, color: "#a5b4fc" }}>Skills</h4>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                  <h4 style={{ margin: 0, fontSize: 13, color: "#a5b4fc" }}>Skills</h4>
+                  {!editing && (
+                    <button 
+                      onClick={() => setShowSkillExtraction(true)} 
+                      className="btn primary"
+                      style={{ 
+                        padding: "6px 12px", 
+                        fontSize: 12,
+                        background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+                        border: "none",
+                        borderRadius: 6,
+                        cursor: "pointer",
+                        fontWeight: 600
+                      }}
+                      title="Extract skills from your CV using AI"
+                    >
+                      🤖 Extract from CV
+                    </button>
+                  )}
+                </div>
                 <div className="skills">
                   {profile.skills.map((s) => (
                     <div key={s} className="chip">
@@ -767,6 +791,52 @@ export default function ProfilePage() {
           )}
         </main>
       </div>
+
+      {/* Skill Extraction Modal */}
+      {showSkillExtraction && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: "rgba(0, 0, 0, 0.8)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+            padding: 20,
+            backdropFilter: "blur(4px)",
+          }}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              setShowSkillExtraction(false);
+            }
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 700,
+              width: "100%",
+              maxHeight: "90vh",
+              overflowY: "auto",
+            }}
+          >
+            <SkillExtractionDisplay
+              currentProfile={profile}
+              onSkillsExtracted={(data) => {
+                // Skills are already saved to Firebase by the component
+                // Just show success message and refresh will happen via onSnapshot
+                setToast(`✅ Added ${data.skills.length - (profile.skills?.length || 0)} new skills!`);
+                setTimeout(() => setToast(null), 2000);
+                setShowSkillExtraction(false);
+              }}
+              onClose={() => setShowSkillExtraction(false)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
