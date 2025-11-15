@@ -28,6 +28,7 @@ import {
 import { onAuthStateChanged } from "firebase/auth";
 import { isAdmin } from "../../services/adminAuthService";
 import Sidebar from '../Sidebar/Sidebar';
+import { useLanguage } from '../../context/LanguageContext';
 
 // --- Asset Imports (adjust paths if necessary) ---
 import job1 from "./../../Assets/frontend.jpg";
@@ -81,6 +82,7 @@ const PROFILE_TEMPLATE = {
 /* ---------------------------- UserDash Component --------------------------- */
 export default function UserDash() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   // UI state
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
@@ -109,10 +111,10 @@ export default function UserDash() {
 
   // Config - Dark Theme
   const defaultConfig = {
-    app_title: "PathX",
-    welcome_message: "Welcome back",
-    jobs_section_title: "Featured Jobs",
-    resources_section_title: "Learning Resources (For Your Goals)",
+    app_title: t('navbar.pathx'),
+    welcome_message: t('dashboard.welcome'),
+    jobs_section_title: t('dashboard.featuredJobs'),
+    resources_section_title: t('dashboard.learningResources'),
     primary_color: "#6366f1",
     secondary_color: "#0a0e27",
     text_color: "#e4e6eb",
@@ -121,7 +123,7 @@ export default function UserDash() {
     font_family: "Inter, system-ui, -apple-system, sans-serif",
     font_size: 16,
   };
-  const [config] = useState(defaultConfig);
+  const [config, setConfig] = useState(defaultConfig);
   const baseFontSize = config.font_size || defaultConfig.font_size;
 
   // Helper function to create radial gradients for charts
@@ -270,6 +272,23 @@ export default function UserDash() {
       }
     },
   };
+
+  /* ------------------- Update config when language changes ------------------- */
+  useEffect(() => {
+    setConfig({
+      app_title: t('navbar.pathx'),
+      welcome_message: t('dashboard.welcome'),
+      jobs_section_title: t('dashboard.featuredJobs'),
+      resources_section_title: t('dashboard.learningResources'),
+      primary_color: "#6366f1",
+      secondary_color: "#0a0e27",
+      text_color: "#e4e6eb",
+      card_background: "#1a1f3a",
+      accent_color: "#8b5cf6",
+      font_family: "Inter, system-ui, -apple-system, sans-serif",
+      font_size: 16,
+    });
+  }, [t]);
 
   /* ------------------- Auth: listen for signed-in user ------------------- */
   useEffect(() => {
@@ -627,6 +646,7 @@ export default function UserDash() {
               barOptions={barOptions}
               jobs={suggestedJobs}
               courses={suggestedCourses}
+              t={t}
             />
           </div>
         </main>
@@ -663,6 +683,7 @@ function DashboardView({
   barOptions,
   jobs,
   courses,
+  t,
 }) {
   // Helper function to clean URLs - removes quotes and ensures proper protocol
   const cleanUrl = (url) => {
@@ -724,7 +745,7 @@ function DashboardView({
             fontSize: baseFontSize * 1.15,
             textShadow: "0 1px 3px rgba(0,0,0,0.2)"
           }}>
-            Here's what's happening with your career journey today.
+            {config.subtitle || t('dashboard.subtitle')}
           </p>
         </div>
       </div>
@@ -738,10 +759,10 @@ function DashboardView({
         }}
       >
         {[
-          { label: "Total Jobs Applied", value: user.totalJobsApplied || 12, icon: "💼", color: "#6366f1" },
-          { label: "Suggested Courses", value: courses.length, icon: "📚", color: "#8b5cf6" },
-          { label: "Skills Count", value: (user.skills || []).length, icon: "⭐", color: "#f59e0b" },
-          { label: "Profile Strength", value: `${user.profileStrength || 75}%`, icon: "📊", color: "#a855f7" },
+          { label: t('dashboard.stats.jobsApplied'), value: user.totalJobsApplied || 12, icon: "💼", color: "#6366f1" },
+          { label: t('dashboard.stats.suggestedCourses'), value: courses.length, icon: "📚", color: "#8b5cf6" },
+          { label: t('dashboard.stats.skillsCount'), value: (user.skills || []).length, icon: "⭐", color: "#f59e0b" },
+          { label: t('dashboard.stats.profileStrength'), value: `${user.profileStrength || 75}%`, icon: "📊", color: "#a855f7" },
         ].map((stat, idx) => (
           <div 
             key={idx} 
@@ -773,21 +794,21 @@ function DashboardView({
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20, marginBottom: 32 }}>
         <div style={{ border: "1px solid black", borderTop: "4px solid #6366f1", background: config.card_background, padding: 24, borderRadius: 12 }}>
-          <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>Job Applications Over Time</h3>
+          <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>{t('dashboard.charts.jobApplications')}</h3>
           <div style={{ height: 250 }}>
             <Line data={lineData} options={lineOptions} />
           </div>
         </div>
 
         <div style={{ border: "1px solid black", borderTop: "4px solid #8b5cf6", background: config.card_background, padding: 24, borderRadius: 12 }}>
-          <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>Skill Proficiency Breakdown</h3>
+          <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>{t('dashboard.charts.skillProficiency')}</h3>
           <div style={{ height: 250 }}>
             <Doughnut data={doughnutData} options={doughnutOptions} />
           </div>
         </div>
 
         <div style={{ border: "1px solid black", borderTop: "4px solid #ec4899", background: config.card_background, padding: 24, borderRadius: 12 }}>
-          <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>Learning Progress</h3>
+          <h3 style={{ marginTop: 0, marginBottom: 16, fontWeight: 700, color: config.text_color }}>{t('dashboard.charts.learningProgress')}</h3>
           <div style={{ height: 250 }}>
             <Bar data={barData} options={barOptions} />
           </div>
@@ -797,7 +818,7 @@ function DashboardView({
       {/* Jobs */}
       <section style={{ marginBottom: 32 }}>
         <h3 style={{ fontSize: baseFontSize * 1.5, fontWeight: 700, color: "#ffffff", marginBottom: 16 }}>
-          {config.jobs_section_title} (Suggested for you)
+          {config.jobs_section_title} ({t('dashboard.suggestedForYou')})
         </h3>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
           {jobsWithImages.length > 0 ? (
@@ -809,11 +830,11 @@ function DashboardView({
                 <h4 style={{ margin: 0, fontWeight: 700, color: "#ffffff" }}>{job.title}</h4>
                 <p style={{ color: "#e4e6eb", margin: "8px 0" }}>{job.company}</p>
                 <p style={{ color: "#b8bcc8", marginBottom: 12 }}>{job.location} • {job.type}</p>
-                <a href="#" style={{ display: "block", width: "100%", padding: 10, background: config.primary_color, color: "#fff", border: "none", borderRadius: 8, textAlign: "center", textDecoration: "none" }}>Apply Now</a>
+                <a href="#" style={{ display: "block", width: "100%", padding: 10, background: config.primary_color, color: "#fff", border: "none", borderRadius: 8, textAlign: "center", textDecoration: "none" }}>{t('dashboard.applyNow')}</a>
               </article>
             ))
           ) : (
-            <p>No suggested jobs match your current skills. Add more skills to your profile!</p>
+            <p>{t('dashboard.noJobs')}</p>
           )}
         </div>
       </section>
@@ -834,7 +855,7 @@ function DashboardView({
                   <h4 style={{ margin: 0, fontWeight: 700, color: "#ffffff" }}>{course.title}</h4>
                   <p style={{ color: "#e4e6eb", margin: "8px 0" }}>{course.platform}</p>
                   {skills.length > 0 && (
-                    <p style={{ color: "#b8bcc8", fontSize: "0.85rem", margin: "4px 0" }}>Skills: {skills.join(", ")}</p>
+                    <p style={{ color: "#b8bcc8", fontSize: "0.85rem", margin: "4px 0" }}>{t('dashboard.skills')}: {skills.join(", ")}</p>
                   )}
                   {course.costIndicator && (
                     <p style={{ margin: "4px 0" }}>
@@ -846,13 +867,13 @@ function DashboardView({
                         background: course.costIndicator === "Free" ? "#d1fae5" : "#fef3c7",
                         color: course.costIndicator === "Free" ? "#065f46" : "#92400e"
                       }}>
-                        {course.costIndicator}
+                        {course.costIndicator === "Free" ? t('dashboard.free') : t('dashboard.paid')}
                       </span>
                     </p>
                   )}
                   <div style={{ marginBottom: 12, marginTop: 12 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                      <span style={{ color: "#e4e6eb" }}>Progress</span>
+                      <span style={{ color: "#e4e6eb" }}>{t('dashboard.progress')}</span>
                       <span style={{ color: config.accent_color, fontWeight: 700 }}>{progress}%</span>
                     </div>
                     <div style={{ width: "100%", height: 8, background: config.secondary_color, borderRadius: 4, overflow: "hidden" }}>
@@ -860,13 +881,13 @@ function DashboardView({
                     </div>
                   </div>
                   {course.url && (
-                    <a href={cleanUrl(course.url)} target="_blank" rel="noopener noreferrer" style={{ display: "block", width: "100%", padding: 10, background: config.primary_color, color: "#fff", border: "none", borderRadius: 8, textAlign: "center", textDecoration: "none" }}>View Course</a>
+                    <a href={cleanUrl(course.url)} target="_blank" rel="noopener noreferrer" style={{ display: "block", width: "100%", padding: 10, background: config.primary_color, color: "#fff", border: "none", borderRadius: 8, textAlign: "center", textDecoration: "none" }}>{t('dashboard.viewCourse')}</a>
                   )}
                 </article>
               );
             })
           ) : (
-            <p>No suggested courses match your desired skills. Add desired skills in your profile!</p>
+            <p>{t('dashboard.noCourses')}</p>
           )}
         </div>
       </section>

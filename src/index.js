@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './context/LanguageContext';
 import Homepage from './Component/Homepage/Homepage';
 
 import UserDashboard from './Component/UserDashboard/userdash';
@@ -16,19 +17,21 @@ import AdminDashboard from './Component/AdminDashboard/AdminDashboard';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/userdash" element={<UserDashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/ProfilePage" element={<ProfilePage />} />
-        <Route path="/courseList" element={<Course />} />
-        <Route path="/jobs" element={<JobList />} />
-        <Route path="/roadmap" element={<Roadmap />} />
-        <Route path="/careerbot" element={<CareerBot />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-      </Routes>
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/userdash" element={<UserDashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/ProfilePage" element={<ProfilePage />} />
+          <Route path="/courseList" element={<Course />} />
+          <Route path="/jobs" element={<JobList />} />
+          <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/careerbot" element={<CareerBot />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </LanguageProvider>
   </React.StrictMode>
 );
  

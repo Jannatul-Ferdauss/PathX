@@ -1,0 +1,297 @@
+{
+  "common": {
+    "login": "Login",
+    "logout": "Logout",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "search": "Search",
+    "filter": "Filter",
+    "apply": "Apply",
+    "download": "Download",
+    "upload": "Upload",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "close": "Close"
+  },
+  "navbar": {
+    "pathx": "PathX",
+    "dashboard": "Dashboard",
+    "jobs": "Jobs",
+    "resources": "Resources",
+    "roadmap": "Roadmap",
+    "careerMentor": "Career Mentor",
+    "profile": "Profile",
+    "admin": "Admin Panel",
+    "logout": "Logout"
+  },
+  "homepage": {
+    "hero": {
+      "title": "Discover Your Career Path",
+      "subtitle": "AI-powered platform to match your skills with opportunities"
+    },
+    "featuredJobs": {
+      "title": "Featured Jobs",
+      "viewAll": "View All Jobs"
+    },
+    "popularCourses": {
+      "title": "Popular Courses",
+      "viewAll": "Explore Courses"
+    },
+    "jobs": {
+      "frontend": "Frontend Developer",
+      "uiux": "UI/UX Designer",
+      "dataAnalyst": "Data Analyst",
+      "backend": "Backend Engineer",
+      "company1": "Tech Solutions Inc.",
+      "company2": "Creative Studio",
+      "company3": "Analytics Pro",
+      "company4": "Cloud Systems"
+    },
+    "courses": {
+      "webdev": "Web Development Bootcamp",
+      "webdevDesc": "Master HTML, CSS, JS & React",
+      "datascience": "Data Science Fundamentals",
+      "datascienceDesc": "Learn Python, stats & ML basics",
+      "uiux": "UI/UX Design Mastery",
+      "uiuxDesc": "Create beautiful user experiences",
+      "marketing": "Digital Marketing Pro",
+      "marketingDesc": "Master SEO, social media & content"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "subtitle": "Here's what's happening with your career journey today.",
+    "stats": {
+      "jobsApplied": "Total Jobs Applied",
+      "suggestedCourses": "Suggested Courses",
+      "skillsCount": "Skills Count",
+      "profileStrength": "Profile Strength"
+    },
+    "charts": {
+      "jobApplications": "Job Applications Over Time",
+      "skillProficiency": "Skill Proficiency Breakdown",
+      "learningProgress": "Learning Progress"
+    },
+    "featuredJobs": "Featured Jobs",
+    "suggestedForYou": "Suggested for you",
+    "learningResources": "Learning Resources",
+    "applyNow": "Apply Now",
+    "viewCourse": "View Course",
+    "progress": "Progress",
+    "skills": "Skills",
+    "free": "Free",
+    "paid": "Paid",
+    "noJobs": "No suggested jobs match your current skills. Add more skills to your profile!",
+    "noCourses": "No suggested courses match your desired skills. Add desired skills in your profile!"
+  },
+  "jobs": {
+    "title": "Job Opportunities",
+    "subtitle": "Find jobs matching your skills",
+    "searchPlaceholder": "Search jobs by title, company, or location...",
+    "filters": {
+      "title": "Filters",
+      "type": "Job Type",
+      "location": "Location",
+      "allTypes": "All Types",
+      "allLocations": "All Locations",
+      "fullTime": "Full-time",
+      "partTime": "Part-time",
+      "contract": "Contract",
+      "remote": "Remote"
+    },
+    "matchScore": "Match Score",
+    "applyNow": "Apply Now",
+    "noResults": "No jobs found matching your criteria"
+  },
+  "courses": {
+    "title": "Learning Resources",
+    "subtitle": "Explore courses to upgrade your skills",
+    "searchPlaceholder": "Search courses by title or skills...",
+    "filters": {
+      "title": "Filters",
+      "platform": "Platform",
+      "cost": "Cost",
+      "allPlatforms": "All Platforms",
+      "free": "Free",
+      "paid": "Paid"
+    },
+    "skills": "Skills",
+    "viewCourse": "View Course",
+    "noResults": "No courses found matching your criteria"
+  },
+  "roadmap": {
+    "title": "AI Career Roadmap",
+    "form": {
+      "currentSkills": "Current skills (from your profile):",
+      "noSkills": "No skills found in your profile. Please add skills in your profile page.",
+      "targetRole": "Target role:",
+      "timeframe": "Timeframe (months):",
+      "weeklyHours": "Hours per week:",
+      "generate": "Generate Roadmap",
+      "generating": "Generating...",
+      "downloadPDF": "Download as PDF"
+    },
+    "roles": {
+      "frontend": "Frontend Developer",
+      "backend": "Backend Developer",
+      "fullstack": "Full Stack Developer",
+      "datascientist": "Data Scientist",
+      "dataanalyst": "Data Analyst",
+      "mlEngineer": "Machine Learning Engineer",
+      "devops": "DevOps Engineer",
+      "uiux": "UI/UX Designer",
+      "mobile": "Mobile App Developer",
+      "cloud": "Cloud Engineer",
+      "cybersecurity": "Cybersecurity Analyst",
+      "software": "Software Engineer"
+    },
+    "result": {
+      "title": "Your Personalized Career Roadmap",
+      "generated": "Generated:",
+      "summary": "Summary",
+      "learningPath": "Learning Path",
+      "phase": "Phase",
+      "weeks": "weeks",
+      "topics": "Topics/Technologies to Learn:",
+      "projects": "Project Ideas:",
+      "whenToApply": "When to Start Applying",
+      "weeklyPlan": "Weekly Plan"
+    }
+  },
+  "careerBot": {
+    "title": "Career Mentor AI",
+    "subtitle": "Get personalized career guidance",
+    "placeholder": "Ask me about career advice, interview tips, skill recommendations...",
+    "send": "Send",
+    "thinking": "Thinking...",
+    "newChat": "New Chat",
+    "examples": {
+      "title": "Try asking:",
+      "question1": "How do I prepare for a software engineer interview?",
+      "question2": "What skills should I learn for data science?",
+      "question3": "How to write a good resume?"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "tabs": {
+      "basicInfo": "Basic Information",
+      "skills": "Skills & Experience",
+      "cvAssistant": "CV Assistant"
+    },
+    "basicInfo": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "location": "Location",
+      "bio": "Bio",
+      "save": "Save Changes",
+      "saved": "Profile saved successfully!"
+    },
+    "skills": {
+      "current": "Current Skills",
+      "desired": "Desired Skills",
+      "addSkill": "Add Skill",
+      "enterSkill": "Enter a skill",
+      "add": "Add",
+      "extract": "Extract Skills from CV",
+      "upload": "Upload CV",
+      "uploadDesc": "Upload your CV (PDF or TXT) to automatically extract skills",
+      "selectFile": "Select File",
+      "extractBtn": "Extract Skills",
+      "extracting": "Extracting...",
+      "extracted": "Skills extracted successfully!"
+    },
+    "cvAssistant": {
+      "title": "AI CV Optimization",
+      "description": "Get AI-powered suggestions to improve your CV",
+      "jobTitle": "Target Job Title",
+      "jobTitlePlaceholder": "e.g., Frontend Developer",
+      "analyze": "Analyze CV",
+      "analyzing": "Analyzing...",
+      "downloadPDF": "Download PDF",
+      "suggestions": "Suggestions",
+      "improvements": "Recommended Improvements"
+    }
+  },
+  "login": {
+    "title": "Welcome to PathX",
+    "subtitle": "Your AI-powered career companion",
+    "loginTab": "Login",
+    "signupTab": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "confirmPassword": "Confirm Password",
+    "loginBtn": "Login",
+    "signupBtn": "Sign Up",
+    "loggingIn": "Logging in...",
+    "signingUp": "Signing up...",
+    "passwordMismatch": "Passwords don't match",
+    "error": "Authentication error. Please try again."
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "tabs": {
+      "users": "Users",
+      "jobs": "Jobs",
+      "courses": "Courses",
+      "apiConfig": "API Config"
+    },
+    "users": {
+      "title": "User Management",
+      "total": "Total Users",
+      "search": "Search users...",
+      "email": "Email",
+      "name": "Name",
+      "role": "Role",
+      "actions": "Actions",
+      "makeAdmin": "Make Admin",
+      "removeAdmin": "Remove Admin"
+    },
+    "jobs": {
+      "title": "Job Management",
+      "addNew": "Add New Job",
+      "jobTitle": "Job Title",
+      "company": "Company",
+      "location": "Location",
+      "type": "Job Type",
+      "skills": "Required Skills",
+      "save": "Save Job",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "courses": {
+      "title": "Course Management",
+      "addNew": "Add New Course",
+      "courseTitle": "Course Title",
+      "platform": "Platform",
+      "url": "Course URL",
+      "skills": "Related Skills",
+      "cost": "Cost",
+      "save": "Save Course",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "apiConfig": {
+      "title": "API Configuration",
+      "primary": "Primary Provider",
+      "fallback": "Fallback Provider",
+      "secondFallback": "Second Fallback",
+      "geminiKey": "Gemini API Key",
+      "groqKey": "Groq API Key",
+      "openrouterKey": "OpenRouter API Key",
+      "model": "Model",
+      "test": "Test Connection",
+      "save": "Save Configuration",
+      "testing": "Testing...",
+      "success": "Configuration saved successfully!"
+    }
+  }
+}

@@ -3,10 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
 import { isAdmin } from '../../services/adminAuthService';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t, language, toggleLanguage } = useLanguage();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [userIsAdmin, setUserIsAdmin] = useState(false);
 
@@ -102,13 +104,13 @@ export default function Sidebar() {
 
           <nav style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
-              { id: "dashboard", label: "Dashboard", icon: "📊", path: "/userdash" },
-              { id: "jobs", label: "Jobs", icon: "💼", path: "/jobs" },
-              { id: "resources", label: "Resources", icon: "📚", path: "/courseList" },
-              { id: "roadmap", label: "Roadmap", icon: "🗺️", path: "/roadmap" },
-              { id: "careerbot", label: "Career Mentor", icon: "🤖", path: "/careerbot" },
-              { id: "profile", label: "Profile", icon: "👤", path: "/ProfilePage" },
-              ...(userIsAdmin ? [{ id: "admin", label: "Admin Panel", icon: "🔧", path: "/admin" }] : []),
+              { id: "dashboard", label: t('navbar.dashboard'), icon: "📊", path: "/userdash" },
+              { id: "jobs", label: t('navbar.jobs'), icon: "💼", path: "/jobs" },
+              { id: "resources", label: t('navbar.resources'), icon: "📚", path: "/courseList" },
+              { id: "roadmap", label: t('navbar.roadmap'), icon: "🗺️", path: "/roadmap" },
+              { id: "careerbot", label: t('navbar.careerMentor'), icon: "🤖", path: "/careerbot" },
+              { id: "profile", label: t('navbar.profile'), icon: "👤", path: "/ProfilePage" },
+              ...(userIsAdmin ? [{ id: "admin", label: t('navbar.admin'), icon: "🔧", path: "/admin" }] : []),
             ].map((item) => (
               <button
                 key={item.id}
@@ -148,13 +150,43 @@ export default function Sidebar() {
               </button>
             ))}
 
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                marginTop: 16,
+                background: "transparent",
+                border: "1px solid rgba(99, 102, 241, 0.3)",
+                color: "#6366f1",
+                padding: "12px 16px",
+                borderRadius: 12,
+                textAlign: "left",
+                cursor: "pointer",
+                fontSize: "1rem",
+                fontWeight: 500,
+                transition: "all 0.2s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(99, 102, 241, 0.1)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              <span style={{ fontSize: "1.25rem" }}>🌐</span>
+              {sidebarOpen && <span>{language === 'en' ? 'বাংলা' : 'English'}</span>}
+            </button>
+
             <button
               onClick={handleLogout}
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: 12,
-                marginTop: 16,
+                marginTop: 8,
                 background: "transparent",
                 border: "none",
                 color: "#ef4444",
@@ -174,7 +206,7 @@ export default function Sidebar() {
               }}
             >
               <span style={{ fontSize: "1.25rem" }}>🚪</span>
-              {sidebarOpen && <span>Logout</span>}
+              {sidebarOpen && <span>{t('navbar.logout')}</span>}
             </button>
           </nav>
         </div>

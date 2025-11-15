@@ -5,11 +5,13 @@ import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Sidebar from '../Sidebar/Sidebar';
+import { useLanguage } from '../../context/LanguageContext';
 import { getAIJobRecommendations, getJobPlatforms } from "../JobMatching/jobMatchingService";
 import { analyzeSkillGaps } from "../JobMatching/skillGapService";
 
 export default function Jobs() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [jobs, setJobs] = useState([]);
   const [filter, setFilter] = useState("All");
   const [selectedJob, setSelectedJob] = useState(null);
@@ -94,7 +96,7 @@ export default function Jobs() {
     return "#ef4444"; // Red
   };
 
-  if (loading) return <p style={{ padding: "2rem", color: "#e4e6eb" }}>Loading jobs...</p>;
+  if (loading) return <p style={{ padding: "2rem", color: "#e4e6eb" }}>{t('common.loading')}</p>;
 
   return (
     <div
@@ -110,17 +112,23 @@ export default function Jobs() {
       {/* Main Content */}
       <div style={{ flex: 1 }}>
         <div className="jobs-page">
-          <h1>Opportunities for Students</h1>
+          <h1>{t('jobs.title')}</h1>
 
           {/* Filter Buttons */}
           <div className="filter-bar">
-            {["All", "Internship", "Part-time", "Full-time", "Freelance"].map((f) => (
+            {[
+              { value: "All", label: t('jobs.filters.allTypes') },
+              { value: "Internship", label: "Internship" },
+              { value: "Part-time", label: t('jobs.filters.partTime') },
+              { value: "Full-time", label: t('jobs.filters.fullTime') },
+              { value: "Freelance", label: "Freelance" }
+            ].map((f) => (
               <button
-                key={f}
-                className={filter === f ? "active" : ""}
-                onClick={() => setFilter(f)}
+                key={f.value}
+                className={filter === f.value ? "active" : ""}
+                onClick={() => setFilter(f.value)}
               >
-                {f}
+                {f.label}
               </button>
             ))}
           </div>
@@ -128,7 +136,7 @@ export default function Jobs() {
           {/* Job Grid */}
           <div className="jobs-grid">
             {sortedJobs.length === 0 ? (
-              <p style={{ color: "#a5b4fc", textAlign: "center" }}>No jobs available.</p>
+              <p style={{ color: "#a5b4fc", textAlign: "center" }}>{t('jobs.noResults')}</p>
             ) : (
               sortedJobs.map((job) => (
                 <div
@@ -157,7 +165,7 @@ export default function Jobs() {
                         zIndex: 2
                       }}
                     >
-                      {job.matchScore}% Match
+                      {job.matchScore}% {t('jobs.matchScore')}
                     </div>
                   )}
                   

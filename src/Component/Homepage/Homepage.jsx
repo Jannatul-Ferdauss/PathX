@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Homepage.css";
 import Login from "../Login/login.jsx";
+import { useLanguage } from "../../context/LanguageContext";
 import hero1 from "../../Assets/2.jpg";
 import hero2 from "../../Assets/4.jpg";
 import hero3 from "../../Assets/5.jpg";
@@ -19,6 +20,7 @@ import { auth } from "../../firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function Homepage() {
+  const { t } = useLanguage();
   const slidesRef = useRef([]);
   const [authOpen, setAuthOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -53,17 +55,17 @@ export default function Homepage() {
   };
 
   const jobs = [
-    { title: "Frontend Developer", company: "Tech Solutions Inc.", image: frontendImg },
-    { title: "UI/UX Designer", company: "Creative Studio", image: uiuxImg },
-    { title: "Data Analyst", company: "Analytics Pro", image: dataImg },
-    { title: "Backend Engineer", company: "Cloud Systems", image: backendImg },
+    { title: t('homepage.jobs.frontend'), company: t('homepage.jobs.company1'), image: frontendImg },
+    { title: t('homepage.jobs.uiux'), company: t('homepage.jobs.company2'), image: uiuxImg },
+    { title: t('homepage.jobs.dataAnalyst'), company: t('homepage.jobs.company3'), image: dataImg },
+    { title: t('homepage.jobs.backend'), company: t('homepage.jobs.company4'), image: backendImg },
   ];
 
   const courses = [
-    { title: "Web Development Bootcamp", desc: "Master HTML, CSS, JS & React", image: webdevImg },
-    { title: "Data Science Fundamentals", desc: "Learn Python, stats & ML basics", image: datasciImg },
-    { title: "UI/UX Design Mastery", desc: "Create beautiful user experiences", image: designImg },
-    { title: "Digital Marketing Pro", desc: "Master SEO, social media & content", image: digitalImg },
+    { title: t('homepage.courses.webdev'), desc: t('homepage.courses.webdevDesc'), image: webdevImg },
+    { title: t('homepage.courses.datascience'), desc: t('homepage.courses.datascienceDesc'), image: datasciImg },
+    { title: t('homepage.courses.uiux'), desc: t('homepage.courses.uiuxDesc'), image: designImg },
+    { title: t('homepage.courses.marketing'), desc: t('homepage.courses.marketingDesc'), image: digitalImg },
   ];
 
   return (
@@ -78,11 +80,11 @@ export default function Homepage() {
         </div>
         {user ? (
           <button className="btn logout-btn" onClick={handleLogout}>
-            Logout
+            {t('common.logout')}
           </button>
         ) : (
           <button className="btn login-btn" onClick={() => setAuthOpen(true)}>
-            Login
+            {t('common.login')}
           </button>
         )}
       </header>
@@ -103,7 +105,7 @@ export default function Homepage() {
 
       {/* Featured Jobs */}
       <section className="section">
-        <h2 className="section-heading">Featured Jobs</h2>
+        <h2 className="section-heading">{t('homepage.featuredJobs.title')}</h2>
         <div className="grid">
           {jobs.map((job, i) => (
             <div className="course-card" key={i}>
@@ -119,7 +121,7 @@ export default function Homepage() {
 
       {/* Popular Courses */}
       <section className="section">
-        <h2 className="section-heading">Popular Courses</h2>
+        <h2 className="section-heading">{t('homepage.popularCourses.title')}</h2>
         <div className="grid">
           {courses.map((course, i) => (
             <div className="course-card" key={i}>
