@@ -296,16 +296,21 @@ export default function UserDash() {
       setCurrentUser(u);
       setAuthLoading(false);
       
-      // Check if user is admin
+      // Check if user is admin and redirect
       if (u) {
         const adminStatus = await isAdmin(u.uid);
         setUserIsAdmin(adminStatus);
+        
+        // If admin, redirect to admin dashboard
+        if (adminStatus) {
+          navigate('/admin/dashboard');
+        }
       } else {
         setUserIsAdmin(false);
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [navigate]);
 
   /* ---------------- Profile: read or create profile document -------------- */
   useEffect(() => {

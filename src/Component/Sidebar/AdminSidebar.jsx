@@ -1,27 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
-import { isAdmin } from '../../services/adminAuthService';
-import { useLanguage } from '../../context/LanguageContext';
 
-export default function Sidebar() {
+export default function AdminSidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { t, language, toggleLanguage } = useLanguage();
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [userIsAdmin, setUserIsAdmin] = useState(false);
-
-  useEffect(() => {
-    checkAdminStatus();
-  }, []);
-
-  const checkAdminStatus = async () => {
-    if (auth.currentUser) {
-      const adminStatus = await isAdmin(auth.currentUser.uid);
-      setUserIsAdmin(adminStatus);
-    }
-  };
 
   const handleLogout = async () => {
     try {
@@ -35,15 +20,13 @@ export default function Sidebar() {
 
   const getCurrentView = () => {
     const path = location.pathname;
-    if (path === '/userdash') return 'dashboard';
-    if (path === '/jobs') return 'jobs';
-    if (path === '/courseList') return 'resources';
-    if (path === '/roadmap') return 'roadmap';
-    if (path === '/careerbot') return 'careerbot';
-    if (path === '/ProfilePage') return 'profile';
-    if (path === '/cv-assistant') return 'cv-assistant';
-    if (path === '/admin') return 'admin';
+    if (path === '/admin/dashboard') return 'dashboard';
     if (path === '/admin/analytics') return 'analytics';
+    if (path === '/admin/jobs') return 'jobs';
+    if (path === '/admin/resources') return 'resources';
+    if (path === '/admin/users') return 'users';
+    if (path === '/admin/settings') return 'settings';
+    if (path === '/admin') return 'settings';
     return 'dashboard';
   };
 
@@ -57,7 +40,7 @@ export default function Sidebar() {
           left: 0,
           top: 0,
           height: "100%",
-          width: sidebarOpen ? 256 : 80,
+          width: sidebarOpen ? 280 : 80,
           background: "linear-gradient(180deg, #1a1f3a 0%, #0f1420 100%)",
           borderRight: "1px solid rgba(99, 102, 241, 0.2)",
           zIndex: 40,
@@ -90,7 +73,7 @@ export default function Sidebar() {
               />
             </svg>
             {sidebarOpen && (
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <span style={{ 
                   fontWeight: "bold", 
                   fontSize: "1.3rem",
@@ -99,7 +82,10 @@ export default function Sidebar() {
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
                 }}>
-                  PathX
+                  PathX Admin
+                </span>
+                <span style={{ fontSize: "0.7rem", color: "#a5b4fc", fontWeight: "500" }}>
+                  Control Panel
                 </span>
               </div>
             )}
@@ -107,13 +93,12 @@ export default function Sidebar() {
 
           <nav style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {[
-              { id: "dashboard", label: t('navbar.dashboard'), icon: "📊", path: "/userdash" },
-              { id: "jobs", label: t('navbar.jobs'), icon: "💼", path: "/jobs" },
-              { id: "resources", label: t('navbar.resources'), icon: "📚", path: "/courseList" },
-              { id: "roadmap", label: t('navbar.roadmap'), icon: "🗺️", path: "/roadmap" },
-              { id: "careerbot", label: t('navbar.careerMentor'), icon: "🤖", path: "/careerbot" },
-              { id: "profile", label: t('navbar.profile'), icon: "👤", path: "/ProfilePage" },
-              { id: "cv-assistant", label: "CV Assistant", icon: "📄", path: "/cv-assistant" },
+              { id: "dashboard", label: "Dashboard", icon: "📊", path: "/admin/dashboard" },
+              { id: "analytics", label: "Analytics & Reports", icon: "📈", path: "/admin/analytics" },
+              { id: "users", label: "Manage Users", icon: "👥", path: "/admin/users" },
+              { id: "jobs", label: "Manage Jobs", icon: "💼", path: "/admin/jobs" },
+              { id: "resources", label: "Manage Resources", icon: "📚", path: "/admin/resources" },
+              { id: "settings", label: "API Settings", icon: "⚙️", path: "/admin/settings" },
             ].map((item) => (
               <button
                 key={item.id}
@@ -153,36 +138,6 @@ export default function Sidebar() {
               </button>
             ))}
 
-            {/* Language Toggle */}
-            <button
-              onClick={toggleLanguage}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 12,
-                marginTop: 16,
-                background: "transparent",
-                border: "1px solid rgba(99, 102, 241, 0.3)",
-                color: "#6366f1",
-                padding: "12px 16px",
-                borderRadius: 12,
-                textAlign: "left",
-                cursor: "pointer",
-                fontSize: "1rem",
-                fontWeight: 500,
-                transition: "all 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "rgba(99, 102, 241, 0.1)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "transparent";
-              }}
-            >
-              <span style={{ fontSize: "1.25rem" }}>🌐</span>
-              {sidebarOpen && <span>{language === 'en' ? 'বাংলা' : 'English'}</span>}
-            </button>
-
             <button
               onClick={handleLogout}
               style={{
@@ -209,7 +164,7 @@ export default function Sidebar() {
               }}
             >
               <span style={{ fontSize: "1.25rem" }}>🚪</span>
-              {sidebarOpen && <span>{t('navbar.logout')}</span>}
+              {sidebarOpen && <span>Logout</span>}
             </button>
           </nav>
         </div>
@@ -248,7 +203,7 @@ export default function Sidebar() {
       </aside>
       
       {/* Spacer for content */}
-      <div style={{ width: sidebarOpen ? 256 : 80 }} />
+      <div style={{ width: sidebarOpen ? 280 : 80 }} />
     </>
   );
 }

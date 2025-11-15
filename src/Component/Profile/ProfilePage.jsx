@@ -12,9 +12,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // --- Skill Extraction Component ---
 import SkillExtractionDisplay from "../SkillExtraction/SkillExtractionDisplay";
 
-// --- CV Assistant Component ---
-import CVAssistant from "../CVAssistant/CVAssistant";
-
 const PROFILE_TEMPLATE = {
   id: "",
   name: "",
@@ -60,7 +57,6 @@ export default function ProfilePage() {
   const [cvFile, setCvFile] = useState(null);
   const [cvUploading, setCvUploading] = useState(false);
   const [showSkillExtraction, setShowSkillExtraction] = useState(false);
-  const [showCVAssistant, setShowCVAssistant] = useState(false);
 
   // (Auth Listener is unchanged)
   useEffect(() => {
@@ -593,17 +589,6 @@ export default function ProfilePage() {
                   {editing ? "Exit Edit" : "Edit Profile"}
                 </button>
                 <button onClick={handleSaveProfile} className="btn ghost">Save</button>
-                <button 
-                  onClick={() => setShowCVAssistant(true)} 
-                  className="btn primary"
-                  style={{ 
-                    marginTop: 4,
-                    background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
-                    boxShadow: "0 10px 26px rgba(16, 185, 129, 0.4)"
-                  }}
-                >
-                  📄 CV Assistant
-                </button>
               </div>
             </aside>
 
@@ -794,14 +779,6 @@ export default function ProfilePage() {
             />
           </div>
         </div>
-      )}
-
-      {/* CV Assistant Modal */}
-      {showCVAssistant && (
-        <CVAssistant 
-          currentProfile={profile}
-          onClose={() => setShowCVAssistant(false)}
-        />
       )}
     </div>
   );

@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { isAdmin, FIXED_ADMIN } from "../../services/adminAuthService";
 
 
 export default function AuthModal({ isOpen, onClose }) {
@@ -97,14 +98,22 @@ export default function AuthModal({ isOpen, onClose }) {
         console.log("User data:", userDoc.data());
       }
 
-      setSuccess("Logged in successfully!");
-    setTimeout(close, 1000);
-
-    // ✅ your navigate code stays here safely
-    setTimeout(() => {
-      close();
-      navigate("/userdash"); // 🧭 navigate to dashboard after login
-    }, 900);
+      // ✅ Check if user is admin
+      const adminStatus = await isAdmin(user.uid);
+      
+      if (adminStatus || email === FIXED_ADMIN.email) {
+        setSuccess("Welcome Admin! Redirecting to admin panel...");
+        setTimeout(() => {
+          close();
+          navigate("/admin/dashboard"); // 🔐 Navigate to admin dashboard
+        }, 900);
+      } else {
+        setSuccess("Logged in successfully!");
+        setTimeout(() => {
+          close();
+          navigate("/userdash"); // 🧭 Navigate to user dashboard
+        }, 900);
+      }
 
   } catch (err) {
     console.error(err);

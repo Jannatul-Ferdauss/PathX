@@ -11,7 +11,7 @@ import {
   getAvailableModels,
   clearConfigCache,
 } from '../../services/apiProviderService';
-import Navbar from '../Navbar/navbar';
+import AdminSidebar from '../Sidebar/AdminSidebar';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
@@ -146,9 +146,9 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="admin-dashboard">
-        <Navbar />
-        <div className="admin-container">
+      <div style={{ display: 'flex', background: '#0a0e27', minHeight: '100vh' }}>
+        <AdminSidebar />
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#e4e6eb' }}>
           <div className="loading-spinner">Loading Admin Dashboard...</div>
         </div>
       </div>
@@ -157,9 +157,9 @@ const AdminDashboard = () => {
 
   if (!authorized) {
     return (
-      <div className="admin-dashboard">
-        <Navbar />
-        <div className="admin-container">
+      <div style={{ display: 'flex', background: '#0a0e27', minHeight: '100vh' }}>
+        <AdminSidebar />
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#e4e6eb' }}>
           <div className="error-message">{message.text}</div>
         </div>
       </div>
@@ -167,13 +167,15 @@ const AdminDashboard = () => {
   }
 
   return (
-    <div className="admin-dashboard">
-      <Navbar />
+    <div style={{ display: 'flex', background: '#0a0e27', minHeight: '100vh' }}>
+      <AdminSidebar />
       
-      <div className="admin-container">
-        <div className="admin-header">
-          <h1>🔧 Admin Dashboard</h1>
-          <p>Manage API Configuration & Provider Settings</p>
+      <main style={{ flex: 1, padding: '20px', overflow: 'auto' }}>
+        <div className="admin-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '24px' }}>
+          <div>
+            <h1 style={{ margin: 0, fontSize: '32px', fontWeight: '800', color: '#e4e6eb' }}>⚙️ API Settings</h1>
+            <p style={{ margin: '8px 0 0 0', fontSize: '16px', color: '#a5b4fc' }}>Manage API Configuration & Provider Settings</p>
+          </div>
         </div>
 
         {message.text && (
@@ -452,7 +454,7 @@ const AdminDashboard = () => {
             <li><strong>Alternative:</strong> Groq as primary for maximum speed, Gemini as fallback for quality</li>
           </ul>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

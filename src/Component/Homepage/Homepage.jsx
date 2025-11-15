@@ -79,8 +79,8 @@ export default function Homepage() {
           <span className="pathx-name">PathX</span>
         </div>
         {user ? (
-          <button className="btn logout-btn" onClick={handleLogout}>
-            {t('common.logout')}
+          <button className="btn login-btn" onClick={() => setAuthOpen(true)}>
+            {t('common.login')}
           </button>
         ) : (
           <button className="btn login-btn" onClick={() => setAuthOpen(true)}>

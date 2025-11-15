@@ -12,12 +12,28 @@ export const USER_ROLES = {
 };
 
 /**
+ * Fixed admin credentials (for demo purposes)
+ * In production, use proper authentication
+ */
+export const FIXED_ADMIN = {
+  email: 'fawzia@gmail.com',
+  password: '123456',
+  role: USER_ROLES.SUPER_ADMIN,
+};
+
+/**
  * Check if current user is admin
  */
 export const isAdmin = async (userId = null) => {
   try {
     const uid = userId || auth.currentUser?.uid;
     if (!uid) return false;
+
+    // Check if current user is fixed admin
+    const currentUserEmail = auth.currentUser?.email;
+    if (currentUserEmail === FIXED_ADMIN.email) {
+      return true;
+    }
 
     const userDoc = await getDoc(doc(db, 'users', uid));
     
@@ -39,6 +55,12 @@ export const isSuperAdmin = async (userId = null) => {
     const uid = userId || auth.currentUser?.uid;
     if (!uid) return false;
 
+    // Check if current user is fixed admin
+    const currentUserEmail = auth.currentUser?.email;
+    if (currentUserEmail === FIXED_ADMIN.email) {
+      return true;
+    }
+
     const userDoc = await getDoc(doc(db, 'users', uid));
     
     if (!userDoc.exists()) return false;
@@ -58,6 +80,12 @@ export const getUserRole = async (userId = null) => {
   try {
     const uid = userId || auth.currentUser?.uid;
     if (!uid) return USER_ROLES.USER;
+
+    // Check if current user is fixed admin
+    const currentUserEmail = auth.currentUser?.email;
+    if (currentUserEmail === FIXED_ADMIN.email) {
+      return USER_ROLES.SUPER_ADMIN;
+    }
 
     const userDoc = await getDoc(doc(db, 'users', uid));
     
